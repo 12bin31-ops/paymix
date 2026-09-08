@@ -1,6 +1,6 @@
 # PayMix
 
-간편결제 시대의 카드 최적 배치 서비스 (SKALA 3기 AI 웹 서비스 설계 Mini-project)
+간편결제 시대의 카드 최적 배치 서비스 (SKALA 4기 AI 웹 서비스 설계 Mini-project)
 
 - 담당: 3반 P074 박수빈
 - 상세 기획: `docs/PLANNING.md`
