@@ -215,7 +215,6 @@ paymix/
 │     │  └─ mock/              seed · engine(규칙 엔진) · handlers
 │     ├─ components/           BrandLock · CardArt · Verdict · Fold · 차트 3종
 │     └─ views/                화면 1~8
-├─ docs/HANDOFF.md            작업 인수인계 · 알려진 한계
 ├─ CLAUDE.md                  설계 원칙
 └─ PLANNING.md                상세 기획
 ```
