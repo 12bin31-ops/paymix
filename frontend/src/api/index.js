@@ -34,6 +34,7 @@ export const getRecommendation       = (id)   => api.get(`/me/recommendations/${
 export const acceptRecommendation    = (id)   => api.post(`/me/recommendations/${id}/accept`)
 export const getTierGapAlerts        = (q)    => api.get('/me/alerts/tier-gap', q)
 export const getBenefitUtilization   = (q)    => api.get('/me/benefit-utilization', q)
+export const getCardSuggestions      = (q)    => api.get('/me/card-suggestions', q)
 
 /* [화면 6] 카드사 대시보드 */
 export const getIssuerDashboardSummary = (q) => api.get('/issuer/dashboard/summary', q)

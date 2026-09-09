@@ -270,6 +270,12 @@ export const handlers = {
     return { status: 200, data: E.categoryUtilization(cust.id, q.baseMonth || S.BASE_MONTH) }
   },
 
+  'GET /me/card-suggestions': (q = {}) => {
+    const cust = requireCustomer()
+    assertDiagnosable(cust)
+    return { status: 200, data: E.newCardCandidates(cust.id, q.baseMonth || S.BASE_MONTH) }
+  },
+
   'GET /me/alerts/tier-gap': (q = {}) => {
     const cust = requireCustomer()
     assertDiagnosable(cust)

@@ -29,6 +29,11 @@ const THEME = {
     sheen: 'linear-gradient(112deg,transparent 30%,rgba(224,242,254,.34) 47%,transparent 68%)',
     ink: '#ffffff', sub: 'rgba(255,255,255,.68)', line: 'rgba(255,255,255,.18)',
   },
+  'PM-DAILY': {
+    bg: 'linear-gradient(128deg,#065f46 0%,#047857 38%,#0d9488 72%,#134e4a 100%)',
+    sheen: 'linear-gradient(112deg,transparent 30%,rgba(209,250,229,.32) 48%,transparent 70%)',
+    ink: '#ffffff', sub: 'rgba(255,255,255,.68)', line: 'rgba(255,255,255,.18)',
+  },
   'PM-BASIC': {
     bg: 'linear-gradient(128deg,#e2e8f0 0%,#f1f5f9 42%,#cbd5e1 100%)',
     sheen: 'linear-gradient(112deg,transparent 32%,rgba(255,255,255,.7) 50%,transparent 70%)',

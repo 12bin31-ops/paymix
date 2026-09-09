@@ -35,6 +35,7 @@ export const spendingCategories = [
   { id: 7, code: 'SUBSCRIPTION', name: '구독', defaultPerformanceRate: 0.0, isExcludedByDefault: true, displayOrder: 7 },
   { id: 8, code: 'MEDICAL',   name: '의료',   defaultPerformanceRate: 1.0, isExcludedByDefault: false, displayOrder: 8 },
   { id: 9, code: 'PREPAID_CHARGE', name: '선불 충전', defaultPerformanceRate: 0.0, isExcludedByDefault: true, displayOrder: 9 },
+  { id: 10, code: 'FUEL',      name: '주유',   defaultPerformanceRate: 1.0, isExcludedByDefault: false, displayOrder: 10 },
 ]
 
 /* ---------- pay_channels ---------- */
@@ -56,6 +57,8 @@ export const cards = [
     totalMonthlyBenefitLimit: 80000, description: '해외·항공 특화 · 온라인페이 50% 인정', isActive: true },
   { id: 4, cardCode: 'PM-BASIC',    name: 'PayMix 베이직',   brand: 'MASTER', annualFee: 0,
     totalMonthlyBenefitLimit: 10000, description: '연회비 없는 입문형', isActive: false },
+  { id: 5, cardCode: 'PM-DAILY',    name: 'PayMix 데일리',   brand: 'VISA',   annualFee: 20000,
+    totalMonthlyBenefitLimit: 40000, description: '카페·주유 특화 · 간편결제 업종 할인 그대로 적용', isActive: true },
 ]
 
 /* ---------- card_performance_tiers ---------- */
@@ -74,6 +77,9 @@ export const cardPerformanceTiers = [
   // 베이직
   { id: 41, cardId: 4, tierLevel: 0, tierName: '실적 미달',   minPerformance: 0,      maxPerformance: 99999 },
   { id: 42, cardId: 4, tierLevel: 1, tierName: '10만원 이상', minPerformance: 100000, maxPerformance: null },
+  // 데일리
+  { id: 51, cardId: 5, tierLevel: 0, tierName: '실적 미달',   minPerformance: 0,      maxPerformance: 199999 },
+  { id: 52, cardId: 5, tierLevel: 1, tierName: '20만원 이상', minPerformance: 200000, maxPerformance: null },
 ]
 
 /* ---------- benefit_rules ----------
@@ -108,6 +114,11 @@ export const benefitRules = [
   R(3, 32, 2, 'DISCOUNT', 0.06, 5000, 25000, 0),
   R(3, 32, 3, 'DISCOUNT', 0.10, 3000, 15000, 0),
   R(3, 32, 1, 'DISCOUNT', 0.05, 3000, 10000, 0),
+  // ===== 데일리 Lv.1 (20만원 이상) — 카페·주유에 몰아준 특화 상품 =====
+  R(5, 52, 4, 'DISCOUNT', 0.15, 3000, 12000, 0),   // 카페 15%
+  R(5, 52, 10,'DISCOUNT', 0.10, 3000, 15000, 0),   // 주유 10%
+  R(5, 52, 1, 'DISCOUNT', 0.03, 2000,  8000, 0),   // 외식 3%
+  R(5, 52, 3, 'DISCOUNT', 0.05, 1500,  5000, 0),   // 교통 5%
 ]
 
 /* ---------- card_channel_rates ★ 교차 엔티티 ----------
@@ -138,6 +149,8 @@ export const cardChannelRates = [
   CR(3, 1, 1.0, false), CR(3, 2, 1.0, true), CR(3, 3, 1.0, true), CR(3, 4, 1.0, true), CR(3, 5, 1.0, true),
   // 베이직 — 연회비 0원. 실적 조건이 빡빡해 간편결제분은 50%만 인정하고 업종 혜택도 제외
   CR(4, 1, 1.0, true), CR(4, 2, 0.5, false), CR(4, 3, 0.5, false), CR(4, 4, 0.5, false), CR(4, 5, 0.5, false),
+  // 데일리 — 페이사 업종 데이터 제휴. 간편결제로 결제해도 카페·주유 할인이 그대로 적용
+  CR(5, 1, 1.0, true), CR(5, 2, 1.0, true), CR(5, 3, 1.0, true), CR(5, 4, 1.0, true), CR(5, 5, 1.0, true),
 ]
 
 /* ---------- customer_cards ---------- */
@@ -205,6 +218,8 @@ export const transactions = [
   T(101, 2, 4, '투썸플레이스',        8400, 22),
   T(101, 2, 3, '서울교통공사',       58000, 10),
   T(101, 2, 2, '올리브영',           54000, 17),
+  T(101, 1,10, 'GS칼텍스 판교',      92000,  6),
+  T(101, 1,10, 'SK에너지 분당',      78000, 18),
   T(101, 4, 7, '유튜브 프리미엄',    14900,  8, 503),   // 구독 = 실적 제외 항목
 
   /* ===== 박수빈 · 클래식(102) — 네이버·카카오페이 중심 =====

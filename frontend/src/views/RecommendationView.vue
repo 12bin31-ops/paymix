@@ -17,6 +17,7 @@ const none = ref(false)
 
 const usage = ref(null)
 const util = ref(null)
+const suggest = ref(null)
 const subs = ref([])
 const myCards = ref([])
 
@@ -88,6 +89,7 @@ async function loadContext() {
     API.getMySubscriptions().then(r => subs.value = r),
     API.getChannelUsage().then(r => usage.value = r).catch(() => {}),
     API.getBenefitUtilization().then(r => util.value = r).catch(() => {}),
+    API.getCardSuggestions().then(r => suggest.value = r).catch(() => {}),
   ])
 }
 async function load() {
@@ -279,6 +281,58 @@ function guide(t) {
         </div>
       </Fold>
 
+      <!-- ============ 새 카드가 도움이 될까 ============ -->
+      <Fold v-if="suggest && suggest.candidates.length" title="지금 카드로는 여기까지예요"
+            :summary="`${suggest.candidates[0].cardName}을 더하면 연 ${won(suggest.candidates[0].annualGain)}원`">
+        <div class="note mb16">
+          아래는 <b>같은 카드사(자사)의 다른 상품</b>입니다. 지금 쓰시는 소비 패턴에 대입해
+          <b>연회비를 빼고도 남는 경우만</b> 보여드립니다. 타사 카드는 비교하지 않습니다.
+        </div>
+
+        <div class="sgs">
+          <div v-for="c in suggest.candidates" :key="c.cardId" class="sg">
+            <div class="sg-head">
+              <CardArt size="sm" :card-code="c.cardCode" :card-name="c.cardName" :brand="c.brand" />
+              <div class="sg-t">
+                <div class="fs20 fw8" style="letter-spacing:-.028em">{{ c.cardName }}</div>
+                <div class="muted3 fs13 mt4">{{ c.description }}</div>
+                <div class="center gap8 mt8">
+                  <span class="badge">연회비 {{ won(c.annualFee) }}원</span>
+                  <span class="badge ok">{{ c.breakEvenMonths }}개월이면 연회비 회수</span>
+                </div>
+              </div>
+              <div class="sg-g">
+                <div class="fs26 fw8 c-ok tnum">+{{ won(c.annualGain) }}<span class="fs15 fw7">원</span></div>
+                <div class="muted3 fs12">연간 · 연회비 뺀 금액</div>
+                <div class="muted3 fs12 mt4">월 혜택 {{ won(c.monthlyBenefit) }}원</div>
+              </div>
+            </div>
+
+            <div class="sg-body">
+              <div class="muted fs14 mb8">이 카드로 결제하면 좋은 항목</div>
+              <div v-for="t in c.targetCategories" :key="t.categoryId" class="sg-row">
+                <span class="fw7 fs15" style="width:76px">{{ t.categoryName }}</span>
+                <span class="tnum fs15">{{ won(t.amount) }}원</span>
+                <span class="muted3 fs13">{{ t.channelNames.join(' · ') }}에서 {{ t.count }}건</span>
+                <span class="spacer"></span>
+                <span v-if="c.reasons.find(r => r.categoryId === t.categoryId)" class="pill grad">
+                  {{ pct0(c.reasons.find(r => r.categoryId === t.categoryId).rate) }}
+                  → {{ won(c.reasons.find(r => r.categoryId === t.categoryId).benefit) }}원
+                </span>
+              </div>
+              <div class="note blue mt12">
+                <b>{{ c.reasons.map(r => r.categoryName).join('·') }}</b>에 매달
+                <b>{{ won(c.reasons.reduce((s, r) => s + r.spending, 0)) }}원</b>을 쓰시는데,
+                지금 가지고 계신 카드들은 이 항목 혜택이 약합니다.
+                <template v-if="c.assignedChannels.length">
+                  이 카드를 <b>{{ c.assignedChannels[0].channelName }}</b>에 물리면 그대로 적용됩니다.
+                </template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Fold>
+
       <!-- ============ 실적 구간 근접 ============ -->
       <Fold v-if="alerts.length" title="조금만 더 쓰면 등급이 올라가요"
             :summary="alerts.map(a => `${a.cardName} ${won(a.amountToNextTier)}원`).join(' · ')">
@@ -386,6 +440,16 @@ function guide(t) {
 .keeps { display: flex; flex-direction: column; gap: 8px; }
 .keep { display: flex; align-items: center; gap: 14px; padding: 10px 12px;
   border: 1px solid var(--line); border-radius: 11px; background: var(--bg-1); }
+
+.sgs { display: flex; flex-direction: column; gap: 14px; }
+.sg { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: #fff; box-shadow: var(--shadow-sm); }
+.sg-head { display: flex; align-items: center; gap: 16px; padding: 16px 18px; background: var(--surface-2); border-bottom: 1px solid var(--line); }
+.sg-t { flex: 1; min-width: 0; }
+.sg-g { text-align: right; flex: 0 0 auto; }
+.sg-body { padding: 16px 18px; }
+.sg-row { display: flex; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.sg-row:last-of-type { border-bottom: none; }
+@media (max-width: 860px) { .sg-head { flex-wrap: wrap; } .sg-g { text-align: left; } }
 
 .ut { display: grid; grid-template-columns: minmax(120px,1fr) minmax(220px,2fr) 110px;
   gap: 16px; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--line); }

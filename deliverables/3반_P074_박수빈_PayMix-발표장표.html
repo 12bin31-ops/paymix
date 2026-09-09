@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<title>PayMix - 발표 장표</title>
+<style>
+  @page { size: 254mm 143mm; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{
+    /* ---- Surface / Text ---- */
+    --ink:#0d1017; --ink2:#525a68; --ink3:#8b93a1;
+    --line:#e7e9ee; --line2:#d6dae1;
+    --bg:#f5f6f8; --bg1:#fbfbfc;
+
+    /* ---- Accent : 앱과 동일한 이리데센트 ---- */
+    --blue:#1b4dff; --blue2:#eef2ff; --blueink:#1540d6;
+    --cyan:#22d3ee; --violet:#7c3aed; --magenta:#c026d3;
+    --grad:linear-gradient(135deg,#22d3ee 0%,#1b4dff 46%,#c026d3 100%);
+    --grad-soft:linear-gradient(135deg,rgba(34,211,238,.10),rgba(27,77,255,.10) 46%,rgba(192,38,211,.09));
+
+    /* ---- Semantic ---- */
+    --red:#dc2626; --red2:#fdf1f1;
+    --green:#047857; --green2:#eff7f4;
+    --amber:#b45309; --amber2:#fdf6ec;
+
+    --shadow-sm:0 1px 2px rgba(13,16,23,.05);
+    --shadow:0 1px 3px rgba(13,16,23,.07), 0 1px 2px rgba(13,16,23,.04);
+  }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family:'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+                'Apple SD Gothic Neo', system-ui, 'Malgun Gothic', sans-serif;
+    color: var(--ink); background:#e7e9ee; line-height:1.5; font-size:13px;
+    -webkit-font-smoothing:antialiased; font-feature-settings:'tnum';
+    letter-spacing:-0.008em;
+  }
+  .slide {
+    width:254mm; height:143mm; background:#fff; margin:0 auto 8mm; padding:11mm 13mm 9mm;
+    position:relative; overflow:hidden; page-break-after:always; break-after:page;
+  }
+  .slide:last-child{ page-break-after:auto; }
+  @media print { body{background:#fff;} .slide{margin:0;} }
+
+  /* ---- 머리/꼬리 ---- */
+  .sh { position:relative; display:flex; align-items:baseline; gap:11px; padding-bottom:6px; margin-bottom:11px; }
+  .sh::after { content:''; position:absolute; left:0; right:0; bottom:0; height:2px; border-radius:2px; background:var(--grad); }
+  .sh .no { font-size:17px; font-weight:800; color:var(--blue); letter-spacing:-.03em; }
+  .sh h2 { font-size:20px; font-weight:750; letter-spacing:-.038em; }
+  .sh .sub { margin-left:auto; font-size:11.5px; color:var(--ink3); font-weight:500; }
+  .sf { position:absolute; left:13mm; right:13mm; bottom:5mm; display:flex; font-size:10px; color:var(--ink3); border-top:1px solid var(--line); padding-top:4px; }
+  .sf .r { margin-left:auto; font-weight:650; color:var(--ink2); }
+
+  /* ---- 공통 ---- */
+  h3 { position:relative; font-size:14px; font-weight:750; letter-spacing:-.024em; margin:9px 0 6px; padding-left:10px; }
+  h3::before { content:''; position:absolute; left:0; top:.2em; bottom:.2em; width:3px; border-radius:2px; background:var(--grad); }
+  h3:first-child{ margin-top:0; }
+  p { margin-bottom:6px; color:var(--ink2); }
+  b, strong { color:var(--ink); font-weight:700; }
+  .row { display:flex; gap:11px; }
+  .col { flex:1; min-width:0; }
+  ul { margin:0 0 6px 17px; color:var(--ink2); }
+  li { margin-bottom:3px; }
+  table { width:100%; border-collapse:collapse; font-size:12px; }
+  th,td { border-bottom:1px solid var(--line); padding:5px 7px; text-align:left; vertical-align:top; }
+  th { background:transparent; font-weight:600; font-size:11px; color:var(--ink3); letter-spacing:.01em; border-bottom:1px solid var(--line2); }
+  tr:last-child > td { border-bottom:none; }
+  td.n, th.n { text-align:right; font-variant-numeric:tabular-nums; }
+  td.c, th.c { text-align:center; }
+  .box { border:1px solid var(--line); border-radius:12px; padding:9px 11px; background:#fff; box-shadow:var(--shadow-sm); }
+  .box.tint { background:var(--bg); box-shadow:none; }
+  .box.blue { background:var(--blue2); border-color:rgba(27,77,255,.22); }
+  .box.red { background:var(--red2); border-color:rgba(220,38,38,.20); }
+  .box.green { background:var(--green2); border-color:rgba(4,120,87,.20); }
+  .box.amber { background:var(--amber2); border-color:rgba(180,83,9,.20); }
+  .box .t { font-weight:750; font-size:12.5px; letter-spacing:-.02em; margin-bottom:4px; }
+  .tag { display:inline-block; font-size:10px; font-weight:650; padding:1px 9px; border-radius:999px; border:1px solid var(--line2); background:var(--bg); color:var(--ink2); }
+  .tag.b { background:rgba(27,77,255,.08); color:var(--blueink); border-color:rgba(27,77,255,.26); }
+  .tag.r { background:rgba(220,38,38,.07); color:var(--red); border-color:rgba(220,38,38,.24); }
+  .tag.g { background:rgba(4,120,87,.08); color:var(--green); border-color:rgba(4,120,87,.24); }
+  .mono { font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; font-size:11.5px; letter-spacing:-.01em; }
+  .kpi { text-align:center; padding:9px 5px; border:1px solid var(--line); border-radius:12px; background:#fff; box-shadow:var(--shadow-sm); }
+  .kpi .v { font-size:22px; font-weight:750; color:var(--blue); line-height:1.1; letter-spacing:-.04em; font-variant-numeric:tabular-nums; }
+  .kpi .l { font-size:10.5px; color:var(--ink3); margin-top:3px; }
+  .quote { font-size:15px; font-weight:700; line-height:1.55; letter-spacing:-.024em; }
+
+  /* ---- 캡처 삽입 자리 ---- */
+  .shot { border:1.5px dashed var(--line2); border-radius:12px; background:var(--bg1);
+          display:flex; flex-direction:column; align-items:center; justify-content:center;
+          text-align:center; color:var(--ink3); gap:3px; overflow:hidden; }
+  .shot .t { font-size:12px; font-weight:700; color:var(--ink2); letter-spacing:-.018em; }
+  .shot .d { font-size:10px; }
+  .shot img { width:100%; height:100%; object-fit:contain; }
+</style>
+</head>
+<body>
+
+<!-- ==================== 표지 ==================== -->
+<div class="slide" style="padding:0; display:flex; flex-direction:column;">
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 20mm; background:linear-gradient(118deg,#0a1f7a 0%,#1540d6 20%,#1b4dff 42%,#4338ca 60%,#7c3aed 79%,#22d3ee 100%); color:#fff;">
+    <div style="font-size:13px; letter-spacing:3px; opacity:.75; font-weight:700;">SKALA 4기 · AI 웹 서비스 설계 Mini-project</div>
+    <div style="font-size:58px; font-weight:800; letter-spacing:-2px; margin-top:10px; line-height:1;">PayMix</div>
+    <div style="font-size:20px; font-weight:600; margin-top:12px; opacity:.95;">간편결제 시대의 카드 최적 배치 서비스</div>
+    <div style="margin-top:22px; padding-top:16px; border-top:1px solid rgba(255,255,255,.28); font-size:17px; font-weight:700;">
+      &ldquo;카드를 바꾸는 게 아니라, 배치를 바꾼다&rdquo;
+    </div>
+  </div>
+  <div style="padding:9mm 20mm; display:flex; align-items:center;">
+    <div>
+      <div style="font-size:16px; font-weight:800;">3반 P074 박수빈</div>
+      <div style="font-size:12px; color:var(--ink3); margin-top:2px;">소비자에게는 똑똑한 소비 · 카드사에는 페이와의 상생</div>
+    </div>
+    <div style="margin-left:auto; font-size:12px; color:var(--ink3);">2026. 09. 10</div>
+  </div>
+</div>
+
+<!-- ==================== 1. 기획 배경 ① ==================== -->
+<div class="slide">
+  <div class="sh"><div class="no">1</div><h2>기획 배경 &#9312; &mdash; 결제는 이미 절반이 넘어갔다</h2><div class="sub">서비스 목적(배경)</div></div>
+
+  <div class="row" style="align-items:stretch;">
+    <div class="col" style="flex:1.25;">
+      <svg viewBox="0 0 460 208" style="width:100%; height:auto;">
+        <text x="0" y="12" font-size="11" font-weight="800" fill="#525a68">일평균 결제액 · 전년 대비 증감</text>
+
+        <text x="0" y="40" font-size="11" fill="#8b93a1">실물카드</text>
+        <rect x="0" y="46" width="300" height="26" rx="3" fill="#e7e9ee"/>
+        <text x="291" y="64" font-size="13" font-weight="800" fill="#525a68" text-anchor="end">1조 4,000억</text>
+        <text x="312" y="64" font-size="13" font-weight="800" fill="#dc2626">&#9660; 0.4%</text>
+
+        <text x="0" y="100" font-size="11" fill="#8b93a1">모바일기기 등</text>
+        <rect x="0" y="106" width="364" height="26" rx="3" fill="#1b4dff"/>
+        <text x="355" y="124" font-size="13" font-weight="800" fill="#fff" text-anchor="end">1조 7,000억</text>
+        <text x="376" y="124" font-size="13" font-weight="800" fill="#047857">&#9650; 7.3%</text>
+
+        <line x1="0" y1="150" x2="460" y2="150" stroke="#e7e9ee" stroke-width="1"/>
+        <text x="0" y="170" font-size="11" font-weight="800" fill="#525a68">2025년 전체 카드 결제 중</text>
+        <rect x="0" y="178" width="250" height="21" rx="3" fill="#1b4dff"/>
+        <rect x="250" y="178" width="210" height="21" rx="3" fill="#e7e9ee"/>
+        <text x="9" y="193" font-size="11" font-weight="800" fill="#fff">모바일기기 등 54.3%</text>
+        <text x="451" y="193" font-size="11" font-weight="700" fill="#8b93a1" text-anchor="end">기타 45.7%</text>
+      </svg>
+      <div class="box tint" style="margin-top:9px; font-size:12.5px;">
+        카드 기반 <b>간편지급 서비스 비중 51.9%</b> &mdash; 결제의 절반이 이미 간편결제를 경유한다.
+      </div>
+    </div>
+
+    <div class="col" style="flex:1;">
+      <div class="box blue" style="height:100%; display:flex; flex-direction:column; justify-content:center;">
+        <div class="t" style="font-size:14px;">그런데 중요한 것은 이것이다</div>
+        <p class="quote" style="margin:9px 0 0;">
+          간편결제는 카드를 <span style="color:var(--red);">대체하지 않는다.</span>
+        </p>
+        <p style="font-size:12.5px; margin-top:10px;">
+          간편결제 서비스에 카드를 등록해 사용하면
+          <b>수수료 대부분은 여전히 카드사의 몫</b>이다.
+        </p>
+        <div style="margin-top:13px; padding-top:12px; border-top:1px solid #c9d4ff;">
+          <p class="quote" style="margin:0; color:var(--blue);">
+            간편결제는 카드를 대체하는 수단이 아니라<br>
+            <span style="font-size:19px;">카드를 담는 <u>그릇</u>이다.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sf"><div>1. 기획 배경</div><div class="r">1</div></div>
+</div>
+
+<!-- ==================== 2. 기획 배경 ② ==================== -->
+<div class="slide">
+  <div class="sh"><div class="no">2</div><h2>기획 배경 &#9313; &mdash; 그릇 안에서 존재감을 잃었고, 대항은 실패했다</h2><div class="sub">서비스 목적(배경)</div></div>
+
+  <div class="row" style="margin-bottom:10px;">
+    <div class="col"><div class="kpi"><div class="v" style="color:var(--red);">70.3%</div><div class="l">간편지급 중 핀테크 비중<br>(카드사 29.7%)</div></div></div>
+    <div class="col"><div class="kpi"><div class="v" style="color:var(--red);">+14.4%</div><div class="l">개인 신용카드<br>해지 회원 증가 (2년)</div></div></div>
+    <div class="col"><div class="kpi"><div class="v" style="color:var(--red);">&minus;22.7%</div><div class="l">순증 회원<br>감소</div></div></div>
+    <div class="col"><div class="kpi"><div class="v" style="color:var(--red);">14.9%</div><div class="l">휴면카드 비중<br>통계 집계 이후 최고</div></div></div>
+  </div>
+
+  <div class="row" style="align-items:stretch;">
+    <div class="col" style="flex:1;">
+      <h3>대항 전략은 세 번 실패했다</h3>
+      <table>
+        <tr><th style="width:34%;">시도</th><th>결과</th></tr>
+        <tr><td><b>JUSTOUCH</b></td><td>카드사 간 이해관계 문제로 실패</td></tr>
+        <tr><td><b>EMV QR</b></td><td>보급은 됐으나 빅테크 견제 효과 미미</td></tr>
+        <tr><td><b>오픈페이</b><div style="color:var(--ink3); font-size:10.5px;">앱카드 상호연동</div></td><td>출시 2년간 성과 없이 사실상 소멸</td></tr>
+      </table>
+      <div class="box red" style="margin-top:8px; font-size:12px;">
+        <b>공통점 &mdash; 모두 &ldquo;페이에 대항하는&rdquo; 구조였다.</b><br>
+        대형사 이탈 우려로 일부 불참 &rarr; 전체를 못 아우르면 경쟁력 하락 &rarr; 7~8년 굳어진 결제 습관을 되돌리지 못함.
+      </div>
+    </div>
+
+    <div class="col" style="flex:1.15;">
+      <h3>그래서 전략의 방향이 바뀌었다</h3>
+      <svg viewBox="0 0 430 150" style="width:100%; height:auto;">
+        <rect x="0" y="16" width="128" height="72" rx="6" fill="#fdf1f1" stroke="#f0b3b3"/>
+        <text x="64" y="36" font-size="11.5" font-weight="800" fill="#dc2626" text-anchor="middle">대항</text>
+        <text x="64" y="53" font-size="9.5" fill="#8b93a1" text-anchor="middle">JUSTOUCH · EMV QR</text>
+        <text x="64" y="66" font-size="9.5" fill="#8b93a1" text-anchor="middle">오픈페이</text>
+        <text x="64" y="82" font-size="12" font-weight="800" fill="#dc2626" text-anchor="middle">&#10007; 실패</text>
+
+        <path d="M134 52 L148 52" stroke="#8b93a1" stroke-width="2"/>
+        <path d="M148 46 L157 52 L148 58 Z" fill="#8b93a1"/>
+
+        <rect x="160" y="16" width="128" height="72" rx="6" fill="#fdf6ec" stroke="#f0d7a4"/>
+        <text x="224" y="36" font-size="11.5" font-weight="800" fill="#b45309" text-anchor="middle">우회 · 제휴</text>
+        <text x="224" y="53" font-size="9.5" fill="#8b93a1" text-anchor="middle">자체 플랫폼 · PLCC</text>
+        <text x="224" y="66" font-size="9.5" fill="#8b93a1" text-anchor="middle">데이터 사업 1.9조</text>
+        <text x="224" y="82" font-size="12" font-weight="800" fill="#b45309" text-anchor="middle">&#9651; 브랜드 한정</text>
+
+        <path d="M294 52 L308 52" stroke="#8b93a1" stroke-width="2"/>
+        <path d="M308 46 L317 52 L308 58 Z" fill="#8b93a1"/>
+
+        <rect x="320" y="16" width="110" height="72" rx="6" fill="#1b4dff"/>
+        <text x="375" y="36" font-size="11.5" font-weight="800" fill="#fff" text-anchor="middle">채널 안에서의</text>
+        <text x="375" y="50" font-size="11.5" font-weight="800" fill="#fff" text-anchor="middle">배치 최적화</text>
+        <text x="375" y="70" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">PayMix</text>
+
+        <line x1="0" y1="106" x2="430" y2="106" stroke="#e7e9ee"/>
+        <text x="0" y="124" font-size="10.5" fill="#525a68">전략의 본질은 채널 경쟁을 우회해 <tspan font-weight="800" fill="#0d1017">&ldquo;선택받는 카드&rdquo;</tspan>가 되는 것.</text>
+        <text x="0" y="140" font-size="10.5" fill="#525a68">다만 PLCC는 특정 브랜드에 한정 &mdash; <tspan font-weight="800" fill="#1b4dff">일상 소비 전반의 채널별 카드 배치는 여전히 공백.</tspan></text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="sf"><div>1. 기획 배경</div><div class="r">2</div></div>
+</div>
+
+<!-- ==================== 3. 문제 정의 ==================== -->
+<div class="slide">
+  <div class="sh"><div class="no">3</div><h2>문제 정의</h2><div class="sub">구체적 문제 · 원인</div></div>
+
+  <div class="box blue" style="margin-bottom:11px; padding:13px 16px;">
+    <p class="quote" style="margin:0; font-size:16px;">
+      결제의 절반이 간편결제로 이동했으나,<br>
+      그 결제가 <span style="color:var(--blue);">실적에 인정되는지 고객은 알 수 없고</span>,
+      카드사는 <span style="color:var(--blue);">그 정책의 손익을 계산해본 적이 없다.</span>
+    </p>
+  </div>
+
+  <h3>원인 3가지</h3>
+  <div class="row" style="align-items:stretch;">
+    <div class="col">
+      <div class="box" style="height:100%; border-left:3px solid var(--red);">
+        <div class="t">&#9312; 실적 인정 규칙의 불투명성</div>
+        <p style="font-size:12px; margin:0;">
+          전월실적은 결제 총액이 아니다. 공과금·통신비 자동이체, 상품권, 할인받은 금액이 제외되며,
+          간편결제 경유 결제는 <b>(카드사 &times; 결제방식) 조합</b>에 따라 인정 여부가 갈린다.
+        </p>
+        <p style="font-size:12px; margin:7px 0 0; color:var(--red);"><b>고객은 명세서 총액만 확인할 수 있다.</b></p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="box" style="height:100%; border-left:3px solid var(--red);">
+        <div class="t">&#9313; 정기결제의 사각지대</div>
+        <p style="font-size:12px; margin:0;">
+          구독료·통신비는 매달 고정 지출이지만 상당수가 실적에서 제외되거나 혜택 대상이 아니다.
+          고객은 이를 &ldquo;결제액&rdquo;으로 인식하므로 <b>&ldquo;월 40만원 쓰는데 왜 실적 미달인가&rdquo;</b>라는 인식 괴리가 발생한다.
+        </p>
+        <p style="font-size:12px; margin:7px 0 0; color:var(--red);"><b>한 번 설정 후 수년간 방치 &mdash; 최적화 여지가 가장 큰 영역.</b></p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="box" style="height:100%; border-left:3px solid var(--red);">
+        <div class="t">&#9314; 혜택 한도의 다층 구조</div>
+        <p style="font-size:12px; margin:0;">
+          <b>건당 한도 &rarr; 항목별 월 한도 &rarr; 카드 통합 월 한도</b>가 중첩 적용된다.
+        </p>
+        <p style="font-size:12px; margin:7px 0 0; color:var(--red);">
+          <b>명목 혜택률과 실효 혜택률의 괴리를 고객도 카드사도 정확히 파악하지 못한다.</b>
+        </p>
+        <div class="box tint mono" style="margin-top:8px; padding:6px 8px; font-size:11px;">
+          명목 19,460원 &rarr; 실효 16,320원<br>
+          <span style="color:var(--red);">한도 소진분 3,140원 증발</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sf"><div>3. 문제 정의</div><div class="r">3</div></div>
+</div>
+
+<!-- ==================== 4. Pain Point — 소비자 ==================== -->
+<div class="slide">
+  <div class="sh"><div class="no">4</div><h2>Pain Point &mdash; 소비자</h2><div class="sub">&ldquo;쓰긴 쓰는데, 뭘 받고 있는지 모른다&rdquo;</div></div>
+
+  <div class="row" style="align-items:stretch;">
+    <div class="col" style="flex:1.05;">
+      <table>
+        <tr><th style="width:22%;">구분</th><th>Pain Point</th><th class="c" style="width:16%;">해결 화면</th></tr>
+        <tr><td><span class="tag r">핵심</span> <b>실적</b></td><td>간편결제분이 실적에 잡히는지 알 수 없음<br>왜 미달인지 모름</td><td class="c">화면 3</td></tr>
+        <tr><td><span class="tag r">핵심</span> <b>정기결제</b></td><td>어느 카드에 물렸는지 잊음<br>실적 기여가 0인 것을 모름</td><td class="c">화면 4</td></tr>
+        <tr><td>혜택</td><td>한도 소진 여부를 모름 · 포인트 소멸</td><td class="c">화면 3 · 5</td></tr>
+        <tr><td>연회비</td><td>혜택은 매달 조금씩, 연회비는 한 번에 큰돈<br><b>체감 시점 불일치</b>로 이득인데 손해로 인식</td><td class="c">화면 3</td></tr>
+        <tr><td>배치</td><td>어느 페이에 어느 카드를 물릴지 <b>판단 근거가 없음</b></td><td class="c">화면 5</td></tr>
+      </table>
+    </div>
+
+    <div class="col" style="flex:1;">
+      <h3 style="margin-top:0;">실측 &mdash; 박수빈 고객 / 2026-08</h3>
+      <svg viewBox="0 0 420 172" style="width:100%; height:auto;">
+        <text x="0" y="11" font-size="10.5" font-weight="800" fill="#525a68">PayMix 플래티넘 &mdash; 실적은 왜 미달인가</text>
+        <text x="0" y="30" font-size="10" fill="#8b93a1">총 결제액</text>
+        <rect x="0" y="35" width="410" height="24" rx="3" fill="#e7e9ee"/>
+        <text x="402" y="52" font-size="12.5" font-weight="800" fill="#525a68" text-anchor="end">471,800</text>
+
+        <text x="0" y="76" font-size="10" fill="#8b93a1">인정 실적</text>
+        <rect x="0" y="81" width="338" height="24" rx="3" fill="#1b4dff"/>
+        <rect x="338" y="81" width="72" height="24" rx="3" fill="#dc2626"/>
+        <text x="330" y="98" font-size="12.5" font-weight="800" fill="#fff" text-anchor="end">388,900</text>
+        <text x="374" y="98" font-size="10.5" font-weight="800" fill="#fff" text-anchor="middle">82,900</text>
+
+        <text x="0" y="124" font-size="10.5" fill="#525a68">
+          <tspan font-weight="800" fill="#dc2626">82,900원</tspan>이 실적에서 사라진 이유
+        </text>
+        <text x="0" y="140" font-size="10" fill="#8b93a1">SKT 통신요금 68,000 &mdash; 카테고리 제외</text>
+        <text x="0" y="155" font-size="10" fill="#8b93a1">유튜브 프리미엄 14,900 &mdash; 구독 카테고리 제외</text>
+        <text x="0" y="170" font-size="10.5" font-weight="800" fill="#1b4dff">다음 실적 구간까지 111,100원 남음</text>
+      </svg>
+
+      <div class="box red" style="margin-top:7px; font-size:12px;">
+        <b>보유한 다른 카드(클래식)는 더 심각하다.</b><br>
+        실적은 100% 인정되는데 네이버·카카오페이 결제
+        <b style="font-size:14px;">740,000원</b>에 업종 할인이 <b style="color:var(--red);">한 푼도 붙지 않는다.</b>
+        (명목 혜택 = <b>0원</b>)
+      </div>
+    </div>
+  </div>
+
+  <div class="sf"><div>2. Pain Point</div><div class="r">4</div></div>
+</div>
+
+<!-- ==================== 5. Pain Point — 카드사 ==================== -->
+<div class="slide">
+  <div class="sh"><div class="no">5</div><h2>Pain Point &mdash; 카드사</h2><div class="sub">&ldquo;배제할지 인정할지, 손익을 계산해본 적이 없다&rdquo;</div></div>
+
+  <div class="row" style="align-items:stretch;">
+    <div class="col" style="flex:1.05;">
+      <table>
+        <tr><th style="width:22%;">구분</th><th>Pain Point</th><th class="c" style="width:16%;">해결 화면</th></tr>
+        <tr><td><span class="tag r">핵심</span> <b>정책</b></td><td>간편결제를 실적에서 배제하면 비용은 줄고 이탈은 늘어남<br><b>어느 쪽이 큰지 계산해본 적 없음</b></td><td class="c">화면 7</td></tr>
+        <tr><td><span class="tag r">핵심</span> <b>정기결제</b></td><td>이탈 장벽이 가장 높은 결제인데 유치 경쟁이 약함</td><td class="c">화면 6</td></tr>
+        <tr><td>이탈</td><td>해지 +14.4% · 휴면 14.9% 사상 최고</td><td class="c">화면 6</td></tr>
+        <tr><td>채널</td><td>페이별 자사 카드 포지션 미파악</td><td class="c">화면 6</td></tr>
+        <tr><td>예산</td><td>혜택 예산을 어느 카테고리·채널에 배분할지 근거 부재</td><td class="c">화면 7</td></tr>
+        <tr><td>설계</td><td>명목 혜택률과 실효 혜택률의 갭을 모름</td><td class="c">화면 8</td></tr>
+      </table>
+    </div>
+
+    <div class="col" style="flex:1;">
+      <h3 style="margin-top:0;">두 목표는 충돌하지 않는다</h3>
+      <svg viewBox="0 0 420 148" style="width:100%; height:auto;">
+        <rect x="0" y="8" width="118" height="60" rx="6" fill="#eef2ff" stroke="#c9d4ff"/>
+        <text x="59" y="30" font-size="11.5" font-weight="800" fill="#1b4dff" text-anchor="middle">고객</text>
+        <text x="59" y="49" font-size="11" font-weight="700" fill="#525a68" text-anchor="middle">혜택 최대화</text>
+
+        <rect x="0" y="80" width="118" height="60" rx="6" fill="#eff7f4" stroke="#b3e2d1"/>
+        <text x="59" y="102" font-size="11.5" font-weight="800" fill="#047857" text-anchor="middle">카드사</text>
+        <text x="59" y="121" font-size="11" font-weight="700" fill="#525a68" text-anchor="middle">결제 집중</text>
+
+        <path d="M124 38 C160 38 160 62 186 68" stroke="#1b4dff" stroke-width="2" fill="none"/>
+        <path d="M186 62 L196 69 L185 74 Z" fill="#1b4dff"/>
+        <path d="M124 110 C160 110 160 86 186 80" stroke="#047857" stroke-width="2" fill="none"/>
+        <path d="M186 74 L196 79 L185 86 Z" fill="#047857"/>
+
+        <rect x="200" y="46" width="106" height="56" rx="6" fill="#1b4dff"/>
+        <text x="253" y="70" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">PayMix</text>
+        <text x="253" y="87" font-size="9.5" fill="#fff" text-anchor="middle" opacity=".9">최적 배치 제안</text>
+
+        <path d="M310 74 L326 74" stroke="#8b93a1" stroke-width="2"/>
+        <path d="M326 68 L336 74 L326 80 Z" fill="#8b93a1"/>
+
+        <text x="344" y="60" font-size="10.5" font-weight="800" fill="#1b4dff">고객</text>
+        <text x="344" y="74" font-size="10" fill="#525a68">이중 혜택 수취</text>
+        <text x="344" y="95" font-size="10.5" font-weight="800" fill="#047857">카드사</text>
+        <text x="344" y="109" font-size="10" fill="#525a68">자사 카드 집중</text>
+      </svg>
+
+      <div class="box green" style="margin-top:6px; font-size:12px;">
+        간편결제 시장은 계속 성장하고, 고객이 <b>페이 적립 + 카드 혜택</b> 이중 수취를 포기할 이유가 없다.
+        <b>실적에서 배제하는 방식은 이탈만 가속</b>한다.
+      </div>
+    </div>
+  </div>
+
+  <div class="sf"><div>2. Pain Point</div><div class="r">5</div></div>
+</div>
+
+<!-- ==================== 6. 핵심 가치 및 주요 기능 ==================== -->
+<div class="slide">
+  <div class="sh"><div class="no">6</div><h2>핵심 가치 및 주요 기능</h2><div class="sub">사용자 문제를 어떻게 해결하는가</div></div>
+
+  <div class="box blue" style="margin-bottom:10px;">
+    <div class="t">한 줄 정의</div>
+    <p style="margin:0; font-size:13px;">
+      카드사 내부 결제 데이터로 실적·혜택·정기결제 현황을 진단하고,
+      <b>보유 중인 자사 카드를 어느 간편결제 채널에 배치해야 혜택이 최대가 되는지</b> 제안한다.
+      카드사에는 채널별 포지션과 혜택 정책 시뮬레이션을 제공한다.
+    </p>
+  </div>
+
+  <div class="row" style="margin-bottom:10px;">
+    <div class="col">
+      <div class="box" style="border-left:3px solid var(--blue); height:100%;">
+        <div class="t">소비자 &mdash; 똑똑한 소비</div>
+        <p style="margin:0; font-size:12.5px;">카드를 더 발급받는 게 아니라, <b>이미 가진 카드를 제대로 쓰게</b> 만든다</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="box" style="border-left:3px solid var(--green); height:100%;">
+        <div class="t">카드사 &mdash; 페이와의 상생</div>
+        <p style="margin:0; font-size:12.5px;">간편결제를 배제하지 않고, <b>그 채널 안에서 선택받는 구조</b>로 전환한다</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>서비스 흐름 3단계</h3>
+  <svg viewBox="0 0 900 108" style="width:100%; height:auto;">
+    <rect x="0" y="6" width="268" height="66" rx="7" fill="#f5f6f8" stroke="#d6dae1"/>
+    <circle cx="26" cy="26" r="11" fill="#1b4dff"/>
+    <text x="26" y="30" font-size="11" font-weight="800" fill="#fff" text-anchor="middle">1</text>
+    <text x="45" y="30" font-size="13" font-weight="800" fill="#0d1017">카드 데이터 연결</text>
+    <text x="16" y="52" font-size="11" fill="#8b93a1">보유 자사 카드 확인 · 결제 데이터 연동</text>
+    <text x="16" y="66" font-size="10" fill="#8b93a1">화면 2</text>
+
+    <path d="M276 39 L292 39" stroke="#8b93a1" stroke-width="2"/>
+    <path d="M292 33 L302 39 L292 45 Z" fill="#8b93a1"/>
+
+    <rect x="306" y="6" width="268" height="66" rx="7" fill="#eef2ff" stroke="#c9d4ff"/>
+    <circle cx="332" cy="26" r="11" fill="#1b4dff"/>
+    <text x="332" y="30" font-size="11" font-weight="800" fill="#fff" text-anchor="middle">2</text>
+    <text x="351" y="30" font-size="13" font-weight="800" fill="#0d1017">현황 진단</text>
+    <text x="322" y="52" font-size="11" fill="#525a68">실적·연회비 &nbsp;/&nbsp; 페이·정기결제</text>
+    <text x="322" y="66" font-size="10" fill="#8b93a1">화면 3 · 4</text>
+
+    <path d="M582 39 L598 39" stroke="#8b93a1" stroke-width="2"/>
+    <path d="M598 33 L608 39 L598 45 Z" fill="#8b93a1"/>
+
+    <rect x="612" y="6" width="288" height="66" rx="7" fill="#1b4dff"/>
+    <circle cx="638" cy="26" r="11" fill="#fff"/>
+    <text x="638" y="30" font-size="11" font-weight="800" fill="#1b4dff" text-anchor="middle">3</text>
+    <text x="657" y="30" font-size="13" font-weight="800" fill="#fff">개선 제안</text>
+    <text x="628" y="52" font-size="11" fill="#fff" opacity=".92">페이별 권장 배치 · 정기결제 이전 · 구간 근접 안내</text>
+    <text x="628" y="66" font-size="10" fill="#fff" opacity=".7">화면 5</text>
+
+    <text x="0" y="98" font-size="11.5" fill="#525a68">
+      <tspan font-weight="800" fill="#dc2626">범위 원칙</tspan>
+      &nbsp;제안 대상은 고객이 이미 보유한 <tspan font-weight="800">자사 카드 내 재배치로 한정</tspan>한다.
+      타사 카드 비교·신규 발급 유도는 범위 밖.
+    </text>
+  </svg>
+
+  <div class="sf"><div>3. 핵심 가치 및 주요 기능</div><div class="r">6</div></div>
+</div>
+
+<!-- ==================== 7. 핵심 산출 로직 ==================== -->
+<div class="slide">
+  <div class="sh"><div class="no">7</div><h2>핵심 산출 로직</h2><div class="sub">모든 수치는 서버 규칙 엔진이 산출한다</div></div>
+
+  <div class="row" style="align-items:stretch;">
+    <div class="col" style="flex:1.1;">
+      <div class="box" style="border-left:3px solid var(--blue); margin-bottom:6px;">
+        <div class="t">&#9312; 채널별 인정 실적</div>
+        <div class="mono box tint" style="padding:6px 8px; margin:0;">인정실적 = &Sigma; (결제액 &times; 카테고리인정률 &times; 채널인정률)</div>
+      </div>
+      <div class="box" style="border-left:3px solid var(--blue); margin-bottom:6px;">
+        <div class="t">&#9313; 실적 구간 판정</div>
+        <div class="mono box tint" style="padding:6px 8px; margin:0;">인정실적 &rarr; 구간 결정 &rarr; 적용 혜택 세트 확정</div>
+      </div>
+      <div class="box" style="border-left:3px solid var(--blue); margin-bottom:6px;">
+        <div class="t">&#9314; 실효 혜택 &mdash; 3종 한도 중첩</div>
+        <div class="mono box tint" style="padding:6px 8px; margin:0;">min( &Sigma; min(결제액 &times; 할인율, 항목월한도), 통합월한도 )</div>
+      </div>
+      <div class="box" style="border-left:3px solid var(--blue); margin-bottom:6px;">
+        <div class="t">&#9315; 연간 순이익</div>
+        <div class="mono box tint" style="padding:6px 8px; margin:0;">((실효혜택 + 채널적립) &times; 12) &minus; 연회비</div>
+      </div>
+      <div class="box blue" style="border-left:3px solid var(--blue);">
+        <div class="t">&#9316; 최적 배치 탐색</div>
+        <div class="mono box" style="padding:6px 8px; margin:0; background:#fff;">max &Sigma; 순이익 over (페이채널 &times; 보유카드), (정기결제 &times; 보유카드)</div>
+      </div>
+    </div>
+
+    <div class="col" style="flex:1.15;">
+      <h3 style="margin-top:0;">산출 예시 &mdash; 박수빈 / 2026-08 / 플래티넘</h3>
+      <table style="font-size:11.5px;">
+        <tr><th colspan="3">&#9312; 인정 실적</th></tr>
+        <tr><th>결제 내역</th><th class="n">결제액</th><th class="n">인정액</th></tr>
+        <tr><td>외식·의료·교통·쇼핑 등 <span style="color:var(--ink3);">(실물 · 삼성페이)</span></td><td class="n">388,900</td><td class="n">388,900</td></tr>
+        <tr><td>SKT 통신요금 <span style="color:var(--red);">(카테고리 0)</span></td><td class="n">68,000</td><td class="n" style="color:var(--red);">0</td></tr>
+        <tr><td>유튜브 프리미엄 <span style="color:var(--red);">(구독 0)</span></td><td class="n">14,900</td><td class="n" style="color:var(--red);">0</td></tr>
+        <tr style="background:var(--bg);"><td><b>합계</b></td><td class="n"><b>471,800</b></td><td class="n"><b style="color:var(--blue);">388,900</b></td></tr>
+      </table>
+      <table style="font-size:11.5px; margin-top:6px;">
+        <tr><th colspan="2">&#9313; ~ &#9315; 이후 산출</th></tr>
+        <tr><td>&#9313; 실적 구간</td><td class="n"><b>30만원 이상</b> <span style="color:var(--ink3); font-weight:400;">(다음 구간까지 111,100)</span></td></tr>
+        <tr><td>&#9314; 명목 혜택</td><td class="n">19,460</td></tr>
+        <tr><td>&nbsp;&nbsp;&nbsp;한도 소진분</td><td class="n" style="color:var(--red);">&minus;3,140</td></tr>
+        <tr><td>&nbsp;&nbsp;&nbsp;<b>실효 혜택</b></td><td class="n"><b>16,320</b></td></tr>
+        <tr><td>&nbsp;&nbsp;&nbsp;채널 적립</td><td class="n">943</td></tr>
+        <tr><td>&#9315; 연회비</td><td class="n" style="color:var(--red);">&minus;30,000</td></tr>
+        <tr style="background:var(--blue2);"><td><b>연간 순이익</b></td><td class="n"><b style="color:var(--blue); font-size:13px;">177,156원</b></td></tr>
+      </table>
+      <div class="box green" style="margin-top:6px; font-size:11.5px;">
+        <b>&#9316; 보유 2장 최적 배치 적용 시</b> &mdash;
+        연 <b>329,556원</b> &rarr; <b>617,796원</b>
+        <span style="color:var(--green); font-weight:800;">(+288,240원 / 월 24,020원)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="box amber" style="margin-top:8px; font-size:12px;">
+    <b>설계 원칙</b> &mdash; 금융 도메인이므로 <b>수치 생성을 생성형 모델에 위임하지 않는다.</b>
+    AI는 &#9312; 페이·PG 경유로 뭉개진 가맹점명의 <b>업종 정규화</b>(계산의 전제 조건), &#9313; 확정된 수치의 <b>자연어 설명</b> &mdash; 두 곳에만 쓴다.
+  </div>
+
+  <div class="sf"><div>3. 핵심 가치 및 주요 기능</div><div class="r">7</div></div>
+</div>
+
+<!-- ==================== 8. 시스템 액터 정의 ==================== -->
+<div class="slide">
+  <div class="sh"><div class="no">8</div><h2>시스템 액터 정의</h2><div class="sub">액터 3종 · 액터별 제공 기능</div></div>
+
+  <table>
+    <tr>
+      <th style="width:17%;">Actor</th>
+      <th style="width:15%;">접근 방식</th>
+      <th>제공 기능 (요구사항)</th>
+      <th class="c" style="width:13%;">대응 화면</th>
+    </tr>
+    <tr>
+      <td><span class="tag b">고객</span><div style="margin-top:4px; font-weight:800;">일반 사용자</div></td>
+      <td>이메일 / 비밀번호<br>로그인</td>
+      <td>
+        <b>&#9312;</b> 회원가입 · 로그인 &nbsp;
+        <b>&#9313;</b> 카드 데이터 연결 &mdash; 보유 자사 카드 목록 확인 및 연결<br>
+        <b>&#9314;</b> 실적·연회비 진단 &mdash; 인정 실적, 실적 제외 내역, 포인트 잔액·만료, 연간 순이익<br>
+        <b>&#9315;</b> 페이·정기결제 현황 &mdash; 채널별 결제 비중, 정기결제별 연결 카드·실적 인정 여부<br>
+        <b>&#9316;</b> 개선 제안 조회 &mdash; 페이별 권장 카드, 정기결제 이전, 차분 비교, AI 설명<br>
+        <b>&#9317;</b> 실적 구간 근접 확인
+      </td>
+      <td class="c">1 · 2 · 3<br>4 · 5</td>
+    </tr>
+    <tr>
+      <td><span class="tag g">카드사</span><div style="margin-top:4px; font-weight:800;">담당자 (관리자)</div></td>
+      <td>이메일 / 비밀번호<br>로그인</td>
+      <td>
+        <b>&#9312;</b> 로그인<br>
+        <b>&#9313;</b> 채널 포지션 대시보드 &mdash; 페이별 자사 카드 연결 비중·결제액 추이, 실적 미달 고객 규모<br>
+        <b>&#9314;</b> 혜택 정책 시뮬레이션 &mdash; 채널 인정률·한도·실적 구간 변경 시 비용/효과 예측<br>
+        <b>&#9315;</b> 세그먼트 추출 &mdash; 시뮬레이션 조건 해당 고객군 추출 및 안내 대상 지정<br>
+        <b>&#9316;</b> 카드 상품 및 혜택 규칙 관리 &mdash; 상품 등록, 카테고리별 혜택, 채널별 인정률 설정
+      </td>
+      <td class="c">1 · 6<br>7 · 8</td>
+    </tr>
+    <tr>
+      <td><span class="tag">외부 시스템</span><div style="margin-top:4px; font-weight:800;">결제 승인계</div></td>
+      <td>API 연동</td>
+      <td>
+        거래 데이터 송신 &mdash; 승인 건별 <span class="mono">amount · approved_at · merchant_name · channel</span> 전달<br>
+        <span style="color:var(--red); font-weight:700;">본 과제 범위에서는 인터페이스(API 명세)만 정의하고 구현은 제외한다.</span>
+      </td>
+      <td class="c">&mdash;</td>
+    </tr>
+  </table>
+
+  <div class="box blue" style="margin-top:10px; font-size:12.5px;">
+    <b>액터별 기능 &harr; 화면 &harr; API &harr; 엔티티가 1:1로 대응한다.</b>
+    UI에 없는 기능은 API에도 두지 않는다는 원칙으로 3자 정합성을 유지했다. &nbsp;<span style="color:var(--ink3);">(다음 장 UI 흐름도)</span>
+  </div>
+
+  <div class="sf"><div>4. 시스템 액터 정의</div><div class="r">8</div></div>
+</div>
+
+<!-- ==================== 9. UI 흐름도 ==================== -->
+<div class="slide">
+  <div class="sh"><div class="no">9</div><h2>UI 흐름도 (전체)</h2><div class="sub">액터 3레인 · 화면 8종 + 예외 3종</div></div>
+
+  <div class="shot" style="height:105mm;">
+    <div class="t">&#9635; UI 전체 흐름도 캡처 삽입 위치</div>
+    <div class="d">기술서(개요.pdf) <b>9페이지 &lsquo;UI 흐름도&rsquo;</b>를 그대로 캡처해 삽입</div>
+    <div class="d" style="margin-top:6px; color:#8b93a1;">&lt;img src="흐름도.png"&gt; 로 이 박스를 교체</div>
+  </div>
+
+  <div class="sf"><div>5. UI 흐름</div><div class="r">9</div></div>
+</div>
+
+<!-- ==================== 10. 화면 1~4 ==================== -->
+<div class="slide">
+  <div class="sh"><div class="no">10</div><h2>UI 흐름 &mdash; 화면 1 ~ 4</h2><div class="sub"><span class="tag b">고객</span> 연결 &rarr; 진단</div></div>
+
+  <div class="row" style="height:83mm;">
+    <div class="col">
+      <div class="shot" style="height:60mm;"><div class="t">&#9635; 화면 1 캡처</div><div class="d">로그인 / 회원가입</div></div>
+      <div style="margin-top:5px; font-size:11px;">
+        <b>화면 1 · 로그인/회원가입</b> <span class="tag">공통</span><br>
+        <span style="color:var(--ink3);">이메일·비밀번호 입력 &rarr; 역할(고객/카드사)별 진입 화면 분기</span><br>
+        <span class="mono" style="color:var(--blue);">POST /auth/login · /auth/signup</span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="shot" style="height:60mm;"><div class="t">&#9635; 화면 2 캡처</div><div class="d">카드 데이터 연결</div></div>
+      <div style="margin-top:5px; font-size:11px;">
+        <b>화면 2 · 카드 데이터 연결</b> <span class="tag b">고객</span><br>
+        <span style="color:var(--ink3);">보유 <b>자사 카드</b>만 노출 · 연결 토글 &rarr; 거래 데이터 연동</span><br>
+        <span class="mono" style="color:var(--blue);">GET /me/cards · PATCH /me/cards/{id}/link</span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="shot" style="height:60mm;"><div class="t">&#9635; 화면 3 캡처</div><div class="d">실적·연회비 진단</div></div>
+      <div style="margin-top:5px; font-size:11px;">
+        <b>화면 3 · 실적·연회비 진단</b> <span class="tag b">고객</span><br>
+        <span style="color:var(--ink3);">총결제 <b>471,800</b> &harr; 인정실적 <b>388,900</b> 간극 · 제외 내역 · 명목&rarr;실효 · 순이익</span><br>
+        <span class="mono" style="color:var(--blue);">GET /me/diagnosis/performance · /me/cards/{id}/exclusions</span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="shot" style="height:60mm;"><div class="t">&#9635; 화면 4 캡처</div><div class="d">페이·정기결제 현황</div></div>
+      <div style="margin-top:5px; font-size:11px;">
+        <b>화면 4 · 페이·정기결제 현황</b> <span class="tag b">고객</span><br>
+        <span style="color:var(--ink3);">채널 비중 네이버 45.5% / 실물 28.3% / 카카오 14.7% / 삼성 11.5%</span><br>
+        <span class="mono" style="color:var(--blue);">GET /me/channels/usage · /me/subscriptions</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="box tint" style="margin-top:6px; font-size:11.5px;">
+    각 화면의 <b>호출 API</b>와 <b>사용 엔티티</b>를 병기 &mdash; UI &harr; API &harr; ERD 정합성을 화면 단위로 증명한다.
+  </div>
+
+  <div class="sf"><div>5. UI 흐름</div><div class="r">10</div></div>
+</div>
+
+<!-- ==================== 11. 화면 5~8 ==================== -->
+<div class="slide">
+  <div class="sh"><div class="no">11</div><h2>UI 흐름 &mdash; 화면 5 ~ 8</h2><div class="sub"><span class="tag b">고객</span> 개선 제안 &nbsp;<span class="tag g">카드사</span> 분석 · 시뮬레이션 · 규칙</div></div>
+
+  <div class="row" style="height:83mm;">
+    <div class="col">
+      <div class="shot" style="height:60mm; border-color:var(--blue); background:var(--blue2);">
+        <div class="t" style="color:var(--blue);">&#9635; 화면 5 캡처</div><div class="d">개선 제안 &mdash; 최종 산출물</div>
+      </div>
+      <div style="margin-top:5px; font-size:11px;">
+        <b>화면 5 · 개선 제안</b> <span class="tag b">고객</span><br>
+        <span style="color:var(--blue); font-weight:800;">&ldquo;배치를 바꾸면 연 288,240원 더 받습니다&rdquo;</span><br>
+        <span style="color:var(--ink3);">네이버 +9,000 · 카카오 +13,530 · 실물 +640 · 넷플릭스 +850 (월)</span><br>
+        <span class="mono" style="color:var(--blue);">POST /me/recommendations</span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="shot" style="height:60mm;"><div class="t">&#9635; 화면 6 캡처</div><div class="d">채널 포지션 대시보드</div></div>
+      <div style="margin-top:5px; font-size:11px;">
+        <b>화면 6 · 채널 포지션</b> <span class="tag g">카드사</span><br>
+        <span style="color:var(--ink3);">고객 12,480 · 실적 미달 <b>3,411명(33.3%)</b> · 간편결제 비중 <b>71.8%</b></span><br>
+        <span class="mono" style="color:var(--green);">GET /issuer/summary · /issuer/channels</span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="shot" style="height:60mm;"><div class="t">&#9635; 화면 7 캡처</div><div class="d">혜택 정책 시뮬레이션</div></div>
+      <div style="margin-top:5px; font-size:11px;">
+        <b>화면 7 · 정책 시뮬레이션</b> <span class="tag g">카드사</span><br>
+        <span style="color:var(--ink3);">인정률·한도·구간 변경 &rarr; <b>비용 증가 vs 이탈 방지</b> 사전 계산</span><br>
+        <span class="mono" style="color:var(--green);">POST /issuer/simulations · /segments</span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="shot" style="height:60mm;"><div class="t">&#9635; 화면 8 캡처</div><div class="d">카드·혜택 규칙 관리</div></div>
+      <div style="margin-top:5px; font-size:11px;">
+        <b>화면 8 · 규칙 관리</b> <span class="tag g">카드사</span><br>
+        <span style="color:var(--ink3);">상품 등록 · 카테고리별 혜택 · <b>채널별 인정률/혜택적용 설정</b></span><br>
+        <span class="mono" style="color:var(--green);">PUT /issuer/cards/{id}/channel-rates</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="box green" style="margin-top:6px; font-size:11.5px;">
+    <b>라이브 시연</b> &mdash; 화면 8에서 <b>클래식 카드의 네이버페이 &lsquo;혜택 적용&rsquo;을 OFF &rarr; ON</b>으로 저장하면,
+    고객 화면의 진단과 제안이 <b>즉시 바뀐다.</b> <span style="color:var(--ink3);">(교차 엔티티 분리로 가능한 동작 &mdash; 15p)</span>
+  </div>
+
+  <div class="sf"><div>5. UI 흐름</div><div class="r">11</div></div>
+</div>
+
+<!-- ==================== 12. 예외 시나리오 ==================== -->
+<div class="slide">
+  <div class="sh"><div class="no">12</div><h2>예외 / 오류 시나리오</h2><div class="sub">정상 흐름만으로는 신뢰를 얻을 수 없다</div></div>
+
+  <div class="row" style="height:78mm;">
+    <div class="col">
+      <div class="shot" style="height:52mm;"><div class="t">&#9635; 예외 1 캡처</div><div class="d">화면 3 &mdash; 진단 불가</div></div>
+      <div class="box red" style="margin-top:6px; font-size:11.5px;">
+        <div class="t">화면 3 &mdash; 데이터 부족</div>
+        가입 1개월 미만 또는 기준월 거래 없음<br>
+        <b>&rarr; 진단 불가 안내</b><br>
+        <span style="color:var(--ink3);">부정확한 제안보다 진단 불가를 명시하는 것이 신뢰 유지에 유리</span><br>
+        <span class="mono">422 · GET /me/diagnosis/performance</span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="shot" style="height:52mm;"><div class="t">&#9635; 예외 2 캡처</div><div class="d">화면 5 &mdash; 변경 실익 없음</div></div>
+      <div class="box amber" style="margin-top:6px; font-size:11.5px;">
+        <div class="t">화면 5 &mdash; 이미 최적</div>
+        현재 배치가 이미 최적해<br>
+        <b>&rarr; &ldquo;변경 실익 없음&rdquo; 처리</b><br>
+        <span style="color:var(--ink3);">억지 제안을 만들지 않는다. 개선액 0원이면 0원이라고 말한다</span><br>
+        <span class="mono">200 · POST /me/recommendations</span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="shot" style="height:52mm;"><div class="t">&#9635; 예외 3 캡처</div><div class="d">화면 7 &mdash; 검증 오류</div></div>
+      <div class="box" style="margin-top:6px; font-size:11.5px; border-left:3px solid var(--ink2);">
+        <div class="t">화면 7 &mdash; 파라미터 범위 초과</div>
+        인정률 &gt; 100% 등 허용 범위 밖 입력<br>
+        <b>&rarr; 검증 오류 반환</b><br>
+        <span style="color:var(--ink3);">필드 단위 오류 메시지로 어떤 값이 왜 잘못됐는지 지목</span><br>
+        <span class="mono">400 · POST /issuer/simulations</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="box tint" style="margin-top:6px; font-size:11.5px;">
+    <b>API 에러 코드 전 구간 정의</b> &mdash;
+    <span class="tag">400</span> 검증 실패 &nbsp;
+    <span class="tag">401</span> 미인증 &nbsp;
+    <span class="tag">403</span> 권한 없음 &nbsp;
+    <span class="tag">404</span> 리소스 없음 &nbsp;
+    <span class="tag">409</span> 충돌 &nbsp;
+    <span class="tag">422</span> 처리 불가
+    &nbsp;&mdash; 공통 <span class="mono">Error</span> 스키마를 <span class="mono">$ref</span>로 재사용
+  </div>
+
+  <div class="sf"><div>5. UI 흐름 · 예외</div><div class="r">12</div></div>
+</div>
+
+<!-- ==================== 13. 데이터 모델 ==================== -->
+<div class="slide">
+  <div class="sh"><div class="no">13</div><h2>데이터 모델 (ERD)</h2><div class="sub">엔티티 14 · 관계 24 · 컬럼 127</div></div>
+
+  <div class="row" style="align-items:stretch; height:88mm;">
+    <div class="col" style="flex:1.5;">
+      <div class="shot" style="height:100%;">
+        <div class="t">&#9635; ERD 다이어그램 캡처 삽입 위치</div>
+        <div class="d">dbdiagram.io 에 <b>PayMix-DB.dbml</b> 붙여넣고 캡처</div>
+      </div>
+    </div>
+    <div class="col" style="flex:1;">
+      <h3 style="margin-top:0;">기획 11개 &rarr; 설계 14개로 확장한 이유</h3>
+      <table style="font-size:11.5px;">
+        <tr><th style="width:38%;">추가 엔티티</th><th>이유</th></tr>
+        <tr><td class="mono"><b>transactions</b></td><td>인정실적 = &Sigma;(<b>결제액</b>&times;&hellip;) 인데 그 결제액을 담을 테이블이 없었다. 외부 액터 수신처도 부재</td></tr>
+        <tr><td class="mono"><b>card_performance<br>_tiers</b></td><td>실적 구간(<b>카드</b> 단위)을 <span class="mono">benefit_rules</span>(<b>카테고리</b> 단위)에 섞으면 정규화가 깨짐</td></tr>
+        <tr><td class="mono"><b>point_balances</b></td><td>화면 3의 포인트 잔액·소멸 예정 대응 컬럼이 없었음</td></tr>
+      </table>
+      <div class="box blue" style="margin-top:8px; font-size:11.5px;">
+        <div class="t">저장하지 않는 리소스</div>
+        화면 6 대시보드 지표와 화면 7 시뮬레이션·세그먼트 결과는 <b>저장 테이블을 두지 않고</b> 거래에서 실시간 집계한다.
+        &rarr; 그래서 UI에도 &ldquo;이력&rdquo; 메뉴가 없다.
+      </div>
+    </div>
+  </div>
+
+  <div class="sf"><div>6. 데이터 모델 설계</div><div class="r">13</div></div>
+</div>
+
+<!-- ==================== 14. API 명세 ==================== -->
+<div class="slide">
+  <div class="sh"><div class="no">14</div><h2>API 명세</h2><div class="sub">OAS 3.0.3 · 32 Path / 39 Operation / 48 Schema</div></div>
+
+  <div class="row" style="align-items:stretch; height:88mm;">
+    <div class="col" style="flex:1.5;">
+      <div class="shot" style="height:100%;">
+        <div class="t">&#9635; Swagger UI 캡처 삽입 위치</div>
+        <div class="d">editor-next.swagger.io 에 <b>PayMix-API.yml</b> 붙여넣고 캡처</div>
+        <div class="d" style="margin-top:4px;">Paths 목록 1장 + Schemas 목록 1장</div>
+      </div>
+    </div>
+    <div class="col" style="flex:1;">
+      <div class="row" style="margin-bottom:8px;">
+        <div class="col"><div class="kpi"><div class="v">32</div><div class="l">Path</div></div></div>
+        <div class="col"><div class="kpi"><div class="v">39</div><div class="l">Operation</div></div></div>
+        <div class="col"><div class="kpi"><div class="v">48</div><div class="l">Schema</div></div></div>
+      </div>
+      <h3>설계 포인트</h3>
+      <table style="font-size:11.5px;">
+        <tr><td style="width:42%;"><b>화면별 전량 정의</b></td><td>화면 8개에서 호출되는 API를 <b>누락 없이</b> 정의</td></tr>
+        <tr><td><b>공통 스키마 재사용</b></td><td><span class="mono">$ref</span> <b>205회</b> &mdash; Error · 페이징 · 도메인 공통</td></tr>
+        <tr><td><b>에러 코드 규격화</b></td><td>400 / 401 / 403 / 404 / 409 / 422</td></tr>
+        <tr><td><b>HTTP 메서드</b></td><td>조회 GET · 생성 POST · 전체 갱신 PUT · 부분 PATCH</td></tr>
+        <tr><td><b>외부 액터</b></td><td>결제 승인계 거래 수신 API &mdash; 명세만 정의</td></tr>
+      </table>
+      <div class="box green" style="margin-top:8px; font-size:11.5px;">
+        <b>UI에 없는 기능은 API에도 두지 않는다.</b><br>
+        이 원칙으로 <b>UI &harr; ERD &harr; API</b> 3자 정합성을 유지했다.
+      </div>
+    </div>
+  </div>
+
+  <div class="sf"><div>7. API 명세 정의</div><div class="r">14</div></div>
+</div>
+
+<!-- ==================== 15. 고려사항 ==================== -->
+<div class="slide">
+  <div class="sh"><div class="no">15</div><h2>고려사항</h2><div class="sub">설계상의 고민 · 다음 단계 개발 시 고려 사항</div></div>
+
+  <div class="row" style="align-items:stretch;">
+    <div class="col" style="flex:1.15;">
+      <h3 style="margin-top:0;">설계상의 고민</h3>
+      <div class="box blue" style="margin-bottom:7px;">
+        <div class="t">&#9312; 채널 인정률은 어디에 속하는가</div>
+        <p style="margin:0; font-size:11.5px;">
+          카드 속성도, 채널 속성도 아닌 <b>(카드 &times; 채널) 교차 속성</b>이다.
+          &rarr; <span class="mono">card_channel_rates</span> 로 분리하고
+          <span class="mono">performance_rate</span>(실적 인정률)와
+          <span class="mono">is_benefit_eligible</span>(혜택 적용 여부) <b>두 축</b>을 별도 관리.
+        </p>
+        <p style="margin:6px 0 0; font-size:11.5px; color:var(--blue);">
+          <b>이 분리가 화면 7 시뮬레이션과 화면 8 차등 정책의 구현 가능 여부를 결정했다.</b>
+        </p>
+      </div>
+      <div class="box blue" style="margin-bottom:7px;">
+        <div class="t">&#9313; 제안 근거를 어떻게 보존하는가</div>
+        <p style="margin:0; font-size:11.5px;">
+          혜택 규칙은 변경된다. 규칙 FK로만 저장하면 <b>과거 제안의 근거가 소실</b>된다.
+          &rarr; <span class="mono">recommendation_details</span> 에 계산 시점의 인정률·할인율·한도를
+          <b>값으로 복사(스냅샷)</b>해 보관.
+        </p>
+      </div>
+      <div class="box amber">
+        <div class="t">&#9314; 혜택 비용 증가의 트레이드오프 <span style="font-weight:400; color:var(--ink3);">(예상 Q&amp;A)</span></div>
+        <p style="margin:0; font-size:11.5px;">
+          실적 충족률이 오르면 혜택 지급 비용도 는다. 그러나 그 혜택은 <b>이미 상품 설계 시 예산에 반영된 것</b>이며,
+          현재는 고객에게 도달하지 못한 채 <b>이탈만 유발</b>하고 있다.
+          <b style="color:var(--amber);">화면 7이 정확히 이 트레이드오프를 사전 계산하기 위한 도구다.</b>
+        </p>
+      </div>
+    </div>
+
+    <div class="col" style="flex:1;">
+      <h3 style="margin-top:0;">다음 단계 개발 시 고려 사항</h3>
+      <table style="font-size:11.5px;">
+        <tr><th style="width:44%;">항목</th><th>사유 / 전제</th></tr>
+        <tr><td><b>결제 시점 실시간<br>카드 추천</b></td><td>간편결제사 제휴 전제. 사후 제안보다 가치가 크나 결제 흐름 개입이 필요</td></tr>
+        <tr><td><b>정기결제 변경<br>자동 실행</b></td><td>각 서비스사 연동 필요. 현 범위는 <b>안내 및 딥링크 제공까지</b></td></tr>
+        <tr><td><b>마이데이터 기반<br>타사 거래 통합</b></td><td>외부 시스템 액터로 <b>인터페이스만 정의</b></td></tr>
+        <tr><td><b>가구 단위 최적화</b></td><td>개인 최적과 가구 최적의 상충 문제</td></tr>
+        <tr><td><b>타사 카드 포함 비교</b></td><td>카드사 내부 시스템 특성상 <b>자사 상품 내 재배치로 한정</b></td></tr>
+      </table>
+
+      <h3>기대 성과 지표</h3>
+      <table style="font-size:11.5px;">
+        <tr><th style="width:44%;">1차 (직접 측정)</th><th>2차 (사업 성과)</th></tr>
+        <tr>
+          <td>정기결제 이전 건수<br>실적 충족률<br>채널별 자사 카드 연결 비중<br>제안 수락률</td>
+          <td>1인당 월 결제액<br>휴면 전환율 감소<br>해지율 감소<br>정기결제 보유 고객 비중</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="sf"><div>8. 고려사항</div><div class="r">15</div></div>
+</div>
+
+</body>
+</html>

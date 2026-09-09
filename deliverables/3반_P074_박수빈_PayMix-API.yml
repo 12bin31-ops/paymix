@@ -614,6 +614,41 @@ paths:
         '422':
           $ref: '#/components/responses/DiagnosisUnavailable'
 
+  /me/card-suggestions:
+    get:
+      tags: [Customer-Recommendation]
+      summary: 신규 카드 발급 추천 조회
+      description: |
+        보유 카드 재배치만으로 도달할 수 없는 구간을, **자사 카탈로그의 미보유 상품**으로
+        메울 수 있는지 판정한다.
+
+        **범위 원칙** — 후보는 자사 상품으로만 한정한다. 타사 카드는 비교 대상이 아니다.
+
+        **판정 방식**
+        1. 기준선: 보유 카드만으로 (채널 × 카테고리) 단위 최적 배치 시의 연간 순이익
+        2. 후보별: 해당 카드를 더해 다시 최적 배치했을 때의 연간 순이익
+        3. `annualGain = (후보 순이익) − (기준선)` — **연회비를 차감한 뒤에도 양수인 상품만 반환**
+
+        채널 단위가 아니라 카테고리 단위로 배분하는 이유는, 결제 시점마다 사용할 카드를
+        고를 수 있어 "카페는 A카드, 외식은 B카드"가 실제로 가능한 배치이기 때문이다.
+        추천 근거로 어떤 소비 항목에서 이득이 발생하는지 함께 반환한다.
+      operationId: getCardSuggestions
+      parameters:
+        - $ref: '#/components/parameters/BaseMonthQuery'
+      responses:
+        '200':
+          description: 조회 성공. 조건을 만족하는 상품이 없으면 candidates 는 빈 배열이다.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardSuggestionResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/DiagnosisUnavailable'
+
   /me/alerts/tier-gap:
     get:
       tags: [Customer-Recommendation]
@@ -2582,6 +2617,145 @@ components:
           nullable: true
           description: 미보유 카탈로그 상품인 경우의 연회비(원)
           example: 50000
+
+    CardSuggestionResponse:
+      type: object
+      description: 신규 카드 발급 추천 결과 (자사 카탈로그 한정)
+      properties:
+        baseMonth:
+          type: string
+          example: '2026-08'
+        baseAnnualNetBenefit:
+          type: integer
+          description: 보유 카드만으로 최적 배치했을 때의 연간 순이익(원). 비교 기준선
+          example: 667272
+        candidates:
+          type: array
+          description: 연회비 차감 후에도 순증이 발생하는 상품만 포함. 순증 큰 순
+          items:
+            $ref: '#/components/schemas/CardSuggestion'
+
+    CardSuggestion:
+      type: object
+      properties:
+        cardId:
+          type: integer
+          format: int64
+          example: 5
+        cardCode:
+          type: string
+          example: PM-DAILY
+        cardName:
+          type: string
+          example: PayMix 데일리
+        brand:
+          type: string
+          example: VISA
+        description:
+          type: string
+          example: 카페·주유 특화 · 간편결제 업종 할인 그대로 적용
+        annualFee:
+          type: integer
+          example: 20000
+        totalMonthlyBenefitLimit:
+          type: integer
+          nullable: true
+          example: 40000
+        tierName:
+          type: string
+          description: 예상 도달 실적 구간
+          example: 20만원 이상
+        monthlyBenefit:
+          type: integer
+          description: 이 카드에 배치될 결제에서 예상되는 월 혜택(원)
+          example: 12925
+        annualBenefit:
+          type: integer
+          example: 155100
+        annualGain:
+          type: integer
+          description: 연회비를 차감한 연간 순증(원). 양수인 경우에만 반환된다
+          example: 94156
+        breakEvenMonths:
+          type: integer
+          description: 연회비를 회수하는 데 걸리는 개월 수
+          example: 2
+        targetCategories:
+          type: array
+          description: 이 카드로 결제하면 좋은 소비 항목
+          items:
+            $ref: '#/components/schemas/SuggestionTarget'
+        assignedChannels:
+          type: array
+          description: 이 카드를 물릴 결제 채널 (결제액 큰 순)
+          items:
+            type: object
+            properties:
+              channelId:
+                type: integer
+                format: int64
+                example: 1
+              channelName:
+                type: string
+                example: 실물카드
+              amount:
+                type: integer
+                example: 170000
+        reasons:
+          type: array
+          description: 추천 근거 — 혜택이 큰 카테고리 상위 3건
+          items:
+            $ref: '#/components/schemas/SuggestionReason'
+
+    SuggestionTarget:
+      type: object
+      properties:
+        categoryId:
+          type: integer
+          format: int64
+          example: 10
+        categoryName:
+          type: string
+          example: 주유
+        amount:
+          type: integer
+          description: 기준월 해당 항목 결제액(원)
+          example: 170000
+        count:
+          type: integer
+          example: 2
+        channelNames:
+          type: array
+          description: 이 항목을 주로 결제한 채널 (결제액 큰 순)
+          items:
+            type: string
+          example: [실물카드]
+
+    SuggestionReason:
+      type: object
+      properties:
+        categoryId:
+          type: integer
+          format: int64
+          example: 4
+        categoryName:
+          type: string
+          example: 카페
+        rate:
+          type: number
+          format: double
+          example: 0.15
+        benefitType:
+          type: string
+          enum: [DISCOUNT, POINT]
+          example: DISCOUNT
+        spending:
+          type: integer
+          example: 43900
+        benefit:
+          type: integer
+          description: 이 항목에서 예상되는 월 혜택(원)
+          example: 6585
 
     TierGapAlert:
       type: object

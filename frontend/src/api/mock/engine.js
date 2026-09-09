@@ -869,3 +869,136 @@ export function categoryUtilization(customerId, baseMonth = S.BASE_MONTH) {
     totalBest: categories.reduce((s, c) => s + c.bestOwned.benefit, 0),
   }
 }
+
+/* ============================================================
+   신규 카드 발급 추천 (화면 5)
+   ------------------------------------------------------------
+   "커피랑 주유를 이만큼 쓰시는데, 이 카드를 네이버페이에 물리면 더 낫습니다"
+
+   범위 원칙: 후보는 **자사 카탈로그 상품**으로만 한정한다. 타사 카드는 다루지 않는다.
+   판정 기준: 연회비를 차감한 **연간 순이익 순증**이 양수인 경우에만 추천한다.
+   ============================================================ */
+
+/**
+ * 주어진 카드 집합으로 (채널 × 카테고리) 단위 배분 시의 월 혜택 최대값.
+ *
+ * 채널 단위가 아니라 항목 단위로 나누는 이유: 결제 순간에 어느 카드를 쓸지 고르므로
+ * "카페는 A카드, 외식은 B카드"가 실제로 가능한 배치다.
+ * 카드 단위 통합 월한도를 적용하며, 실적 구간은 배분 결과로 2회 재판정한다.
+ */
+function assignBuckets(txs, cardIds, baseMonth = S.BASE_MONTH) {
+  const key = t => `${t.channelId}:${t.categoryId}`
+  const buckets = {}
+  for (const t of txs) (buckets[key(t)] ||= []).push(t)
+
+  let tiers = {}
+  for (const id of cardIds) tiers[id] = judgeTier(id, recognizedPerformance(txs, id))
+
+  let assign = {}
+  for (let pass = 0; pass < 2; pass++) {
+    assign = {}
+    for (const [k, bt] of Object.entries(buckets)) {
+      let best = null
+      for (const id of cardIds) {
+        const b = effectiveBenefit(bt, id, tiers[id].id).effectiveBenefit + channelReward(bt)
+        const rec = recognizedPerformance(bt, id)
+        // 동점이면 실적 인정이 큰 쪽을 택한다
+        if (!best || b > best.benefit || (b === best.benefit && rec > best.rec))
+          best = { cardId: id, benefit: b, rec }
+      }
+      assign[k] = best
+    }
+    const next = {}
+    for (const id of cardIds) {
+      const mine = txs.filter(t => assign[key(t)].cardId === id)
+      next[id] = judgeTier(id, recognizedPerformance(mine, id))
+    }
+    tiers = next
+  }
+
+  let total = 0
+  const perCard = {}
+  for (const id of cardIds) {
+    const mine = txs.filter(t => assign[key(t)].cardId === id)
+    if (!mine.length) continue
+    const ben = effectiveBenefit(mine, id, tiers[id].id)
+    const reward = channelReward(mine)
+    perCard[id] = { benefit: ben.effectiveBenefit, reward, tier: tiers[id], txs: mine, breakdown: ben.breakdown }
+    total += ben.effectiveBenefit + reward
+  }
+  return { assign, tiers, perCard, total: Math.round(total), key }
+}
+
+export function newCardCandidates(customerId, baseMonth = S.BASE_MONTH) {
+  const owned = S.customerCards.filter(c => c.customerId === customerId && c.isLinked)
+  const txs = txOf(customerId, baseMonth)
+  if (!owned.length || !txs.length) return { baseMonth, baseAnnualNetBenefit: 0, candidates: [] }
+
+  const ownedIds = [...new Set(owned.map(c => c.cardId))]
+  const ownedFee = ownedIds.reduce((s, id) => s + getCard(id).annualFee, 0)
+
+  /* 기준선 — 보유 카드만으로 최적 배치했을 때 */
+  const base = assignBuckets(txs, ownedIds, baseMonth)
+  const baseAnnual = base.total * 12 - ownedFee
+
+  const candidates = []
+  for (const card of S.cards.filter(c => c.isActive && !ownedIds.includes(c.id))) {
+    const withNew = assignBuckets(txs, [...ownedIds, card.id], baseMonth)
+    const annual = withNew.total * 12 - ownedFee - card.annualFee
+    const annualGain = annual - baseAnnual
+    if (annualGain <= 0) continue                    // 연회비를 못 넘기면 추천하지 않는다
+
+    const mine = withNew.perCard[card.id]
+    if (!mine) continue
+
+    /* 이 카드로 결제할 항목 — 카테고리 단위 */
+    const byCat = {}
+    for (const t of mine.txs) {
+      const c = (byCat[t.categoryId] ||= { categoryId: t.categoryId,
+        categoryName: getCategory(t.categoryId).name, amount: 0, count: 0, channels: {} })
+      c.amount += t.amount; c.count++
+      c.channels[t.channelId] = (c.channels[t.channelId] || 0) + t.amount
+    }
+    const targets = Object.values(byCat).map(c => ({
+      ...c,
+      channelNames: Object.entries(c.channels)
+        .sort((a, b) => b[1] - a[1])
+        .map(([id]) => getChannel(Number(id)).name),
+      channels: undefined,
+    })).sort((a, b) => b.amount - a.amount)
+
+    /* 이 카드를 주로 물릴 채널 */
+    const chAmt = {}
+    for (const t of mine.txs) chAmt[t.channelId] = (chAmt[t.channelId] || 0) + t.amount
+    const assigned = Object.entries(chAmt).sort((a, b) => b[1] - a[1]).map(([id, amt]) => ({
+      channelId: Number(id), channelName: getChannel(Number(id)).name, amount: amt,
+    }))
+
+    /* 근거 — 이 카드가 강한 항목 */
+    const spendByCat = {}
+    for (const t of mine.txs) spendByCat[t.categoryId] = (spendByCat[t.categoryId] || 0) + t.amount
+    const reasons = mine.breakdown.filter(b => b.applied > 0).slice(0, 3).map(b => ({
+      categoryId: b.categoryId, categoryName: b.categoryName,
+      rate: b.rate, benefitType: b.benefitType,
+      spending: spendByCat[b.categoryId] || 0, benefit: b.applied,
+    }))
+
+    candidates.push({
+      cardId: card.id, cardCode: card.cardCode, cardName: card.name,
+      brand: card.brand, description: card.description,
+      annualFee: card.annualFee,
+      totalMonthlyBenefitLimit: card.totalMonthlyBenefitLimit,
+      tierName: mine.tier.tierName,
+      monthlyBenefit: Math.round(mine.benefit + mine.reward),
+      annualBenefit: Math.round((mine.benefit + mine.reward) * 12),
+      annualGain,                                    // 연회비 차감 후 순증
+      breakEvenMonths: Math.max(1, Math.ceil(card.annualFee / Math.max(1, mine.benefit + mine.reward))),
+      assignedChannels: assigned,
+      targetCategories: targets,
+      reasons,
+    })
+  }
+
+  candidates.sort((a, b) => b.annualGain - a.annualGain)
+  return { baseMonth, baseAnnualNetBenefit: baseAnnual, candidates }
+}
