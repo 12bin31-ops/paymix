@@ -306,9 +306,12 @@ export const handlers = {
     /* --- 파라미터 범위 검증 (화면 7 예외 시나리오) --- */
     const errors = []
     ;(body.channelRates || []).forEach((r, i) => {
-      if (r.performanceRate < 0 || r.performanceRate > 1)
+      if (r.performanceRate != null && (r.performanceRate < 0 || r.performanceRate > 1))
         errors.push({ field: `channelRates[${i}].performanceRate`,
                       message: '채널 인정률은 0 이상 1 이하여야 합니다.' })
+      if (r.isBenefitEligible != null && typeof r.isBenefitEligible !== 'boolean')
+        errors.push({ field: `channelRates[${i}].isBenefitEligible`,
+                      message: '업종 할인 적용 여부는 true 또는 false 여야 합니다.' })
     })
     if (body.totalMonthlyBenefitLimit != null && body.totalMonthlyBenefitLimit < 0)
       errors.push({ field: 'totalMonthlyBenefitLimit', message: '통합 월한도는 0 이상이어야 합니다.' })

@@ -24,12 +24,19 @@ export const getCardOfCustomerCard = ccId => getCard(getCustomerCard(ccId).cardI
 
 /** 카드 × 채널 인정률 (교차 엔티티 조회) */
 export function channelRate(cardId, channelId, overrides = null) {
-  if (overrides) {
-    const o = overrides.find(r => r.channelId === channelId)
-    if (o) return { performanceRate: o.performanceRate, isBenefitEligible: o.isBenefitEligible !== false }
+  const stored = S.cardChannelRates.find(x => x.cardId === cardId && x.channelId === channelId)
+  const base = stored
+    ? { performanceRate: stored.performanceRate, isBenefitEligible: stored.isBenefitEligible }
+    : { performanceRate: 1, isBenefitEligible: true }
+  if (!overrides) return base
+  const o = overrides.find(r => r.channelId === channelId)
+  if (!o) return base
+  // 시뮬레이션 오버라이드는 명시된 항목만 덮어쓴다.
+  // (인정률만 바꿨는데 업종 할인 적용 여부까지 함께 바뀌면 결과를 신뢰할 수 없다)
+  return {
+    performanceRate:   o.performanceRate   != null ? o.performanceRate   : base.performanceRate,
+    isBenefitEligible: o.isBenefitEligible != null ? o.isBenefitEligible : base.isBenefitEligible,
   }
-  const r = S.cardChannelRates.find(x => x.cardId === cardId && x.channelId === channelId)
-  return r ? { performanceRate: r.performanceRate, isBenefitEligible: r.isBenefitEligible } : { performanceRate: 1, isBenefitEligible: true }
 }
 
 /** 고객의 기준월 거래 */
@@ -670,7 +677,7 @@ export function simulate(req) {
   const scale = Math.round(S.ISSUER_SCALE.activeCustomers / S.customers.length)
 
   const measure = (opts) => {
-    let achieved = 0, cost = 0, recognized = 0, affected = 0
+    let achieved = 0, cost = 0, recognized = 0, affected = 0, receiving = 0
     for (const cc of S.customerCards.filter(c => c.cardId === cardId && c.isLinked)) {
       const txs = S.transactions.filter(t =>
         t.customerCardId === cc.id && t.status === 'APPROVED' && monthOf(t.approvedAt) === baseMonth)
@@ -682,8 +689,9 @@ export function simulate(req) {
       recognized += rec
       cost += ben.effectiveBenefit
       if (tier.tierLevel > 0) achieved++
+      if (ben.effectiveBenefit > 0) receiving++      // 혜택을 실제로 받는 고객
     }
-    return { achieved, cost, recognized, affected }
+    return { achieved, cost, recognized, affected, receiving }
   }
 
   const before = measure({})
@@ -698,12 +706,17 @@ export function simulate(req) {
     tierAchievedRatio: m.affected ? m.achieved / m.affected : 0,
     benefitCost: m.cost * scale * 12,
     recognizedPerformance: m.recognized * scale,
+    // 업종 할인 정책의 실제 효과는 "실적 충족"이 아니라 "혜택 수혜"로 나타난다
+    benefitReceivingCustomers: m.receiving * scale,
+    benefitReceivingRatio: m.affected ? m.receiving / m.affected : 0,
+    avgAnnualBenefitPerCustomer: m.receiving ? Math.round(m.cost * 12 / m.receiving) : 0,
   })
 
   const b = pack(before), a = pack(after)
   return {
     cardId, baseMonth, before: b, after: a,
     deltaTierAchievedCustomers: a.tierAchievedCustomers - b.tierAchievedCustomers,
+    deltaBenefitReceivingCustomers: a.benefitReceivingCustomers - b.benefitReceivingCustomers,
     deltaBenefitCost: a.benefitCost - b.benefitCost,
     deltaRecognizedPerformance: a.recognizedPerformance - b.recognizedPerformance,
     affectedCustomerCount: after.affected * scale,

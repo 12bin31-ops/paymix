@@ -24,6 +24,7 @@ async function loadCard() {
   form.rates = d.channelRates.map(r => ({
     channelId: r.channelId, channelName: r.channelName,
     current: r.performanceRate, performanceRate: r.performanceRate * 100,
+    currentEligible: r.isBenefitEligible, isBenefitEligible: r.isBenefitEligible,
   }))
   form.tierAdj = d.tiers.map(t => ({ tierLevel: t.tierLevel, tierName: t.tierName, current: t.minPerformance, minPerformance: t.minPerformance }))
   tiers.value = d.tiers
@@ -42,7 +43,11 @@ async function run() {
     result.value = await API.runSimulation({
       cardId: Number(form.cardId),
       baseMonth: form.baseMonth,
-      channelRates: form.rates.map(r => ({ channelId: r.channelId, performanceRate: Number(r.performanceRate) / 100 })),
+      channelRates: form.rates.map(r => ({
+        channelId: r.channelId,
+        performanceRate: Number(r.performanceRate) / 100,
+        isBenefitEligible: r.isBenefitEligible,
+      })),
       totalMonthlyBenefitLimit: form.totalMonthlyBenefitLimit == null ? null : Number(form.totalMonthlyBenefitLimit),
       tierAdjustments: form.tierAdj.map(t => ({ tierLevel: t.tierLevel, minPerformance: Number(t.minPerformance) })),
     })
@@ -107,11 +112,10 @@ function breakIt() {
         <div>
           <label class="fs12 muted fw6">채널 인정률 변경</label>
           <table class="tbl mt8">
-            <thead><tr><th>채널</th><th class="c">현재</th><th class="c" style="width:96px">변경</th></tr></thead>
+            <thead><tr><th>채널</th><th class="c" style="width:96px">실적 인정률</th><th class="c" style="width:88px">업종 할인</th></tr></thead>
             <tbody>
               <tr v-for="(r, i) in form.rates" :key="r.channelId">
                 <td class="fs12">{{ r.channelName }}</td>
-                <td class="c muted3 fs12">{{ pct0(r.current) }}</td>
                 <td class="c">
                   <div class="center gap6" style="justify-content:center">
                     <input class="input sm tnum" style="width:56px;text-align:right"
@@ -119,6 +123,15 @@ function breakIt() {
                            v-model.number="r.performanceRate" inputmode="numeric" />
                     <span class="muted3 fs12">%</span>
                   </div>
+                </td>
+                <td class="c">
+                  <label class="tog">
+                    <input type="checkbox" v-model="r.isBenefitEligible" />
+                    <span :class="r.isBenefitEligible ? 'c-ok fw7' : 'muted3'">
+                      {{ r.isBenefitEligible ? '적용' : '제외' }}
+                    </span>
+                  </label>
+                  <div v-if="r.isBenefitEligible !== r.currentEligible" class="c-blue fs11 mt4">변경됨</div>
                 </td>
               </tr>
             </tbody>
@@ -166,6 +179,15 @@ function breakIt() {
           <table class="tbl">
             <thead><tr><th>지표</th><th class="n">변경 전</th><th class="n">변경 후</th><th class="n">차이</th></tr></thead>
             <tbody>
+              <tr style="background:rgba(27,77,255,.05)"><td class="fw7">혜택 수혜 고객 수</td>
+                <td class="n tnum">{{ won(result.before.benefitReceivingCustomers) }}</td>
+                <td class="n tnum">{{ won(result.after.benefitReceivingCustomers) }}</td>
+                <td class="n tnum fw7" :class="result.deltaBenefitReceivingCustomers>=0?'c-ok':'c-danger'">
+                  {{ result.deltaBenefitReceivingCustomers>=0?'+':'' }}{{ won(result.deltaBenefitReceivingCustomers) }}</td></tr>
+              <tr><td>1인당 연간 혜택</td>
+                <td class="n tnum">{{ won(result.before.avgAnnualBenefitPerCustomer) }}원</td>
+                <td class="n tnum">{{ won(result.after.avgAnnualBenefitPerCustomer) }}원</td>
+                <td class="n muted3">—</td></tr>
               <tr><td>실적 충족 고객 수</td>
                 <td class="n tnum">{{ won(result.before.tierAchievedCustomers) }}</td>
                 <td class="n tnum">{{ won(result.after.tierAchievedCustomers) }}</td>
@@ -188,8 +210,8 @@ function breakIt() {
             </tbody>
           </table>
           <div class="note warn mt12">
-            <b>해석</b> — 인정률을 올리면 혜택 비용이 <b>연 {{ eok(result.deltaBenefitCost) }}</b> 증가하지만,
-            실적 미달 고객 <b>{{ won(result.deltaTierAchievedCustomers) }}명</b>이 충족 구간에 진입합니다.
+            <b>해석</b> — 혜택 비용이 <b>연 {{ eok(result.deltaBenefitCost) }}</b> 증가하지만,
+            <b>{{ won(result.deltaBenefitReceivingCustomers) }}명</b>이 새로 혜택을 받게 됩니다.
             이 혜택은 <b>이미 상품 설계 시 예산에 반영된 것</b>이며, 현재는 고객에게 도달하지 못한 채 이탈만 유발하고 있습니다.
           </div>
         </template>
@@ -242,3 +264,8 @@ function breakIt() {
   </div>
 </div>
 </template>
+
+<style scoped>
+.tog { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12.5px; }
+.tog input { accent-color: var(--blue); }
+</style>

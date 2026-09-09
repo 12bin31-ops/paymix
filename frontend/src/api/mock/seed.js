@@ -65,8 +65,8 @@ export const cards = [
 export const cardPerformanceTiers = [
   // 플래티넘
   { id: 11, cardId: 1, tierLevel: 0, tierName: '실적 미달',   minPerformance: 0,      maxPerformance: 299999 },
-  { id: 12, cardId: 1, tierLevel: 1, tierName: '30만원 이상', minPerformance: 300000, maxPerformance: 499999 },
-  { id: 13, cardId: 1, tierLevel: 2, tierName: '50만원 이상', minPerformance: 500000, maxPerformance: null },
+  { id: 12, cardId: 1, tierLevel: 1, tierName: '30만원 이상', minPerformance: 300000, maxPerformance: 699999 },
+  { id: 13, cardId: 1, tierLevel: 2, tierName: '70만원 이상', minPerformance: 700000, maxPerformance: null },
   // 클래식
   { id: 21, cardId: 2, tierLevel: 0, tierName: '실적 미달',   minPerformance: 0,      maxPerformance: 199999 },
   { id: 22, cardId: 2, tierLevel: 1, tierName: '20만원 이상', minPerformance: 200000, maxPerformance: 399999 },

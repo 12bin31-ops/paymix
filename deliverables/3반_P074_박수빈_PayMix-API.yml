@@ -2919,7 +2919,9 @@ components:
           description: 변경할 채널 인정률
           items:
             type: object
-            required: [channelId, performanceRate]
+            required: [channelId]
+            description: |
+              명시한 항목만 덮어쓴다. 인정률만 보내면 업종 할인 적용 여부는 현재 정책이 유지된다.
             properties:
               channelId:
                 type: integer
@@ -2930,8 +2932,15 @@ components:
                 format: double
                 minimum: 0
                 maximum: 1
-                description: 0.0 ~ 1.0 범위를 벗어나면 400
+                description: 변경할 전월실적 인정률. 0.0 ~ 1.0 범위를 벗어나면 400
                 example: 1.0
+              isBenefitEligible:
+                type: boolean
+                description: |
+                  변경할 업종별 할인·적립 적용 여부.
+                  간편결제 경유 건을 영역별 할인 대상에 포함할지가 실무의 핵심 레버이며,
+                  이 값을 켜면 혜택 지급 비용이 늘고 고객 이탈 방지 효과가 발생한다.
+                example: true
         totalMonthlyBenefitLimit:
           type: integer
           minimum: 0
@@ -2973,7 +2982,11 @@ components:
         deltaTierAchievedCustomers:
           type: integer
           description: 실적 충족 고객 수 변화(명)
-          example: 1180
+          example: 0
+        deltaBenefitReceivingCustomers:
+          type: integer
+          description: 혜택 수혜 고객 수 변화(명)
+          example: 3411
         deltaBenefitCost:
           type: integer
           format: int64
@@ -2992,6 +3005,20 @@ components:
     SimulationMetrics:
       type: object
       properties:
+        benefitReceivingCustomers:
+          type: integer
+          description: |
+            실제로 혜택을 1원이라도 받는 고객 수.
+            간편결제 업종 할인 정책의 효과는 실적 충족이 아니라 이 지표에 나타난다.
+          example: 3411
+        benefitReceivingRatio:
+          type: number
+          format: double
+          example: 0.5
+        avgAnnualBenefitPerCustomer:
+          type: integer
+          description: 수혜 고객 1인당 연간 혜택(원)
+          example: 157200
         tierAchievedCustomers:
           type: integer
           description: 실적 구간 충족 고객 수

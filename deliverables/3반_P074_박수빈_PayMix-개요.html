@@ -131,7 +131,7 @@
         <tr><th class="c" style="width:38px;">장</th><th>내용</th><th class="c" style="width:70px;">페이지</th></tr>
         <tr style="background:var(--blue2);"><td class="c"><b>6</b></td><td><b>UI 흐름도 · 전체 화면 와이어프레임</b><div style="color:var(--ink3); font-size:9.5px;">화면 흐름 · 화면 1~8 (화면 5는 2p) · 예외 시나리오 3종</div></td><td class="c"><b>8 – 19</b></td></tr>
         <tr><td class="c"><b>7</b></td><td><b>데이터 모델 (ERD)</b><div style="color:var(--ink3); font-size:9.5px;">엔티티 14종 · 관계 정의 · 설계 핵심 2가지</div></td><td class="c">20</td></tr>
-        <tr><td class="c"><b>8</b></td><td><b>API 명세</b><div style="color:var(--ink3); font-size:9.5px;">엔드포인트 39종 · 에러 코드 정책 · 화면 매핑</div></td><td class="c">21</td></tr>
+        <tr><td class="c"><b>8</b></td><td><b>API 명세</b><div style="color:var(--ink3); font-size:9.5px;">엔드포인트 41종 · 에러 코드 정책 · 화면 매핑</div></td><td class="c">21</td></tr>
         <tr><td class="c"><b>9</b></td><td><b>설계상의 고민과 다음 단계</b><div style="color:var(--ink3); font-size:9.5px;">고민 4가지 · 서비스 범위 · 향후 고려사항</div></td><td class="c">22</td></tr>
       </table>
       <div class="box blue" style="margin-top:9px;">
@@ -139,7 +139,7 @@
         <table style="font-size:9.5px; margin-top:4px;">
           <tr><td class="mono">3반_P074_박수빈_PayMix-개요.pdf</td><td>본 문서 (UI 흐름도 포함)</td></tr>
           <tr><td class="mono">3반_P074_박수빈_PayMix-DB.dbml</td><td>데이터 모델 · 14 테이블</td></tr>
-          <tr><td class="mono">3반_P074_박수빈_PayMix-API.yml</td><td>OAS 3.0.3 · 39 오퍼레이션</td></tr>
+          <tr><td class="mono">3반_P074_박수빈_PayMix-API.yml</td><td>OAS 3.0.3 · 41 오퍼레이션</td></tr>
         </table>
       </div>
     </div>
@@ -446,17 +446,17 @@
       <table style="font-size:9.5px;">
         <tr><th colspan="3">① 인정 실적 산출</th></tr>
         <tr><th>결제 내역</th><th class="n">결제액</th><th class="n">인정액</th></tr>
-        <tr><td>외식·의료·교통·쇼핑 등 <span style="color:var(--ink3);">(실물·삼성페이 · 1.0 × 1.0)</span></td><td class="n">388,900</td><td class="n">388,900</td></tr>
+        <tr><td>외식·주유·의료·교통·쇼핑·카페 <span style="color:var(--ink3);">(실물·삼성페이 · 1.0 × 1.0)</span></td><td class="n">558,900</td><td class="n">558,900</td></tr>
         <tr><td>SKT 통신요금 · 실물카드 <span style="color:var(--red);">(0.0 × 1.0)</span></td><td class="n">68,000</td><td class="n" style="color:var(--red);">0</td></tr>
         <tr><td>유튜브 프리미엄 · 카카오페이 <span style="color:var(--red);">(0.0 × 1.0)</span></td><td class="n">14,900</td><td class="n" style="color:var(--red);">0</td></tr>
-        <tr style="background:var(--bg);"><td><b>합계</b></td><td class="n"><b>471,800</b></td><td class="n"><b style="color:var(--blue);">388,900</b></td></tr>
+        <tr style="background:var(--bg);"><td><b>합계</b></td><td class="n"><b>641,800</b></td><td class="n"><b style="color:var(--blue);">558,900</b></td></tr>
       </table>
       <div class="box red" style="margin:5px 0; font-size:9.5px;">
-        고객 인식은 <b>47만원 결제</b>, 실제 인정 실적은 <b>39만원</b>. 이 <b>82,900원의 간극</b>이 "왜 실적 미달인가"의 정체다.
+        고객 인식은 <b>64만원 결제</b>, 실제 인정 실적은 <b>56만원</b>. 이 <b>82,900원의 간극</b>이 "왜 실적 미달인가"의 정체다.
       </div>
       <table style="font-size:9.5px;">
         <tr><th colspan="2">② ~ ④ 이후 산출</th></tr>
-        <tr><td>② 실적 구간 판정</td><td class="n"><b>30만원 이상</b> (Lv.1)<div style="color:var(--ink3); font-weight:400;">다음 구간 50만원까지 111,100원</div></td></tr>
+        <tr><td>② 실적 구간 판정</td><td class="n"><b>30만원 이상</b> (Lv.1)<div style="color:var(--ink3); font-weight:400;">다음 구간 70만원까지 141,100원</div></td></tr>
         <tr><td>③ 명목 혜택</td><td class="n">19,460</td></tr>
         <tr><td>&nbsp;&nbsp;&nbsp;한도 소진분</td><td class="n" style="color:var(--red);">−3,140</td></tr>
         <tr><td>&nbsp;&nbsp;&nbsp;<b>실효 혜택</b></td><td class="n"><b>16,320</b></td></tr>
@@ -815,13 +815,13 @@
           <div class="pnl">
             <div class="pnl-t">실적 현황 <span class="sp">PayMix 플래티넘 · 1234-****-****-5678</span></div>
             <div style="display:flex; gap:5px; text-align:center; margin-bottom:5px;">
-              <div style="flex:1; border:1px solid var(--line); border-radius:3px; padding:4px;"><div style="font-size:13px; font-weight:800;">471,800</div><div class="lbl">총 결제액</div></div>
-              <div style="flex:1; border:2px solid var(--blue); border-radius:3px; padding:4px; background:var(--blue2);"><div style="font-size:13px; font-weight:800; color:var(--blue);">388,900</div><div class="lbl">인정 실적 <i class="mk">1</i></div></div>
+              <div style="flex:1; border:1px solid var(--line); border-radius:3px; padding:4px;"><div style="font-size:13px; font-weight:800;">641,800</div><div class="lbl">총 결제액</div></div>
+              <div style="flex:1; border:2px solid var(--blue); border-radius:3px; padding:4px; background:var(--blue2);"><div style="font-size:13px; font-weight:800; color:var(--blue);">558,900</div><div class="lbl">인정 실적 <i class="mk">1</i></div></div>
               <div style="flex:1; border:1px solid #f0b3b3; border-radius:3px; padding:4px; background:var(--red2);"><div style="font-size:13px; font-weight:800; color:var(--red);">82,900</div><div class="lbl">실적 제외</div></div>
               <div style="flex:1; border:1px solid var(--line); border-radius:3px; padding:4px;"><div style="font-size:13px; font-weight:800;">30만원 이상</div><div class="lbl">현재 구간 (Lv.1)</div></div>
             </div>
-            <div class="lbl" style="margin-bottom:2px;">다음 구간까지 <b style="color:var(--blue);">111,100원</b> 남음 &nbsp;<span style="color:var(--ink3);">(50만원 이상 구간 · 실적 마감까지 11일)</span> <i class="mk">2</i></div>
-            <div class="bar"><i style="width:78%;"></i></div>
+            <div class="lbl" style="margin-bottom:2px;">다음 구간까지 <b style="color:var(--blue);">141,100원</b> 남음 &nbsp;<span style="color:var(--ink3);">(70만원 이상 구간 · 실적 마감까지 11일)</span> <i class="mk">2</i></div>
+            <div class="bar"><i style="width:80%;"></i></div>
             <div style="display:flex; font-size:8px; color:var(--ink3); margin-top:1px;"><div>0</div><div style="margin-left:auto;">300,000</div><div style="margin-left:auto;">500,000</div></div>
           </div>
 
@@ -871,6 +871,7 @@
         <div class="t" style="padding:6px 8px 3px;">호출 API</div>
         <div class="api"><span class="m get">GET</span><span class="p">/me/diagnosis/performance</span><span class="d">?baseMonth</span></div>
         <div class="api"><span class="m get">GET</span><span class="p">/me/cards/{id}/exclusions</span><span class="d">제외 내역</span></div>
+        <div class="api"><span class="m get">GET</span><span class="p">/me/cards/{id}/benefit-blocks</span><span class="d">업종 할인 미적용</span></div>
         <div class="api"><span class="m get">GET</span><span class="p">/me/points</span><span class="d">포인트 현황</span></div>
       </div>
       <div class="box">
@@ -1015,11 +1016,11 @@
                 <div style="font-size:11px; font-weight:700; margin-top:2px;">카드 배치를 바꾸면 <span style="font-size:17px; font-weight:800; color:var(--blue);">연 288,240원</span> 더 받습니다 <i class="mk">1</i></div>
               </div>
               <div style="text-align:center; border-left:1px solid #c9d4ff; padding-left:9px;">
-                <div class="lbl">현재</div><div style="font-weight:700;">293,556원</div>
+                <div class="lbl">현재</div><div style="font-weight:700;">329,556원</div>
               </div>
               <div style="font-size:15px; color:var(--blue);">→</div>
               <div style="text-align:center;">
-                <div class="lbl">최적 배치</div><div style="font-weight:800; color:var(--blue);">581,796원</div>
+                <div class="lbl">최적 배치</div><div style="font-weight:800; color:var(--blue);">617,796원</div>
               </div>
               <div><span class="btn pri">제안 수락</span></div>
             </div>
@@ -1160,15 +1161,7 @@
                 <td style="color:var(--ink3);">—</td>
                 <td class="n"><b style="color:var(--red);">−600</b></td>
               </tr>
-              <tr>
-                <td><b>교통</b><div style="color:var(--ink3);">58,000원 · 1건</div></td>
-                <td><div class="bar"><i style="width:100%; background:var(--green);"></i></div><span style="color:var(--green); font-weight:700;">100%</span></td>
-                <td>플래티넘<div style="font-weight:700;">1,000원</div></td>
-                <td style="background:var(--blue2);">플래티넘 <span class="tag b" style="font-size:7px;">5%</span><div style="font-weight:700;">1,000원</div></td>
-                <td style="border-style:dashed;">트래블 <span class="tag" style="font-size:7px;">10%</span><div style="font-weight:700;">3,000원</div></td>
-                <td class="n"><span class="tag g" style="font-size:7px;">최적</span></td>
-              </tr>
-            </table>
+                          </table>
             <div style="margin-top:4px; padding:3px 5px; background:var(--blue2); border:1px solid #c9d4ff; border-radius:3px;" class="ent">
               같은 금액을 써도 <b>어느 카드로 긁느냐</b>에 따라 매달 <b>12,470원</b> 차이가 납니다.
             </div>
@@ -1178,23 +1171,48 @@
           <div class="pnl">
             <div class="pnl-t">계산 근거 · 차분 비교 <i class="mk">5</i><span class="sp">2026-08 기준 계산</span></div>
             <table class="wft">
-              <tr><th style="width:11%;">유형</th><th>대상</th><th>현재 카드</th><th>권장 카드</th><th class="c">인정률</th><th class="n">현재</th><th class="n">권장</th><th class="n">월 개선</th></tr>
+              <tr><th style="width:11%;">유형</th><th>대상</th><th>현재 카드</th><th>권장 카드</th><th class="c">업종 할인</th><th class="n">현재</th><th class="n">권장</th><th class="n">월 개선</th></tr>
               <tr><td><span class="tag b" style="font-size:7.5px;">채널</span></td><td><b>카카오페이</b></td><td>클래식</td><td><b style="color:var(--blue);">플래티넘</b></td>
-                  <td class="c">0% → <b style="color:var(--green);">100%</b></td><td class="n">2,774</td><td class="n">16,304</td><td class="n"><b style="color:var(--green);">+13,530</b></td></tr>
+                  <td class="c">제외 → <b style="color:var(--green);">적용</b></td><td class="n">2,774</td><td class="n">16,304</td><td class="n"><b style="color:var(--green);">+13,530</b></td></tr>
               <tr><td><span class="tag b" style="font-size:7.5px;">채널</span></td><td><b>네이버페이</b></td><td>클래식</td><td><b style="color:var(--blue);">플래티넘</b></td>
-                  <td class="c">50% → <b style="color:var(--green);">100%</b></td><td class="n">8,400</td><td class="n">17,400</td><td class="n"><b style="color:var(--green);">+9,000</b></td></tr>
+                  <td class="c">제외 → <b style="color:var(--green);">적용</b></td><td class="n">11,400</td><td class="n">20,400</td><td class="n"><b style="color:var(--green);">+9,000</b></td></tr>
               <tr><td><span class="tag" style="font-size:7.5px;">정기결제</span></td><td><b>넷플릭스</b> <span style="color:var(--ink3);">17,000원/월</span></td><td>클래식</td><td><b style="color:var(--blue);">플래티넘</b></td>
-                  <td class="c">0% → <b style="color:var(--green);">100%</b></td><td class="n">0</td><td class="n">850</td><td class="n"><b style="color:var(--green);">+850</b></td></tr>
+                  <td class="c">제외 → <b style="color:var(--green);">적용</b></td><td class="n">0</td><td class="n">850</td><td class="n"><b style="color:var(--green);">+850</b></td></tr>
               <tr style="background:var(--blue2);"><td colspan="7"><b>월 개선액 합계</b></td><td class="n"><b style="color:var(--blue);">+24,020</b></td></tr>
             </table>
           </div>
 
+          <!-- 신규 카드 발급 추천 -->
+          <div class="pnl">
+            <div class="pnl-t">지금 카드로는 여기까지예요 <i class="mk">6</i>
+              <span class="sp">자사 카탈로그 · 연회비 차감 후에도 남는 상품만</span></div>
+            <table class="wft">
+              <tr><th style="width:19%;">카드</th><th class="n">연회비</th><th>이 카드로 결제할 항목</th>
+                  <th class="n">월 혜택</th><th class="n">연간 순증</th><th class="c">회수</th></tr>
+              <tr style="background:var(--green2);">
+                <td><b>PayMix 데일리</b><div style="color:var(--ink3);">카페·주유 특화</div></td>
+                <td class="n">20,000</td>
+                <td>주유 170,000원 <span style="color:var(--ink3);">(실물카드)</span> · 카페 43,900원 <span style="color:var(--ink3);">(삼성·카카오페이)</span>
+                  <div style="color:var(--green);">카페 15% → 6,585 · 주유 10% → 6,000</div></td>
+                <td class="n">12,925</td>
+                <td class="n"><b style="color:var(--green);">+94,156</b></td>
+                <td class="c">2개월</td>
+              </tr>
+              <tr><td colspan="6" style="color:var(--ink3);">
+                PayMix 트래블은 연회비 50,000원을 넘기지 못해 <b>추천 목록에서 제외</b>됨</td></tr>
+            </table>
+            <div style="margin-top:4px; padding:3px 5px; background:var(--green2); border:1px solid #a7d7c5; border-radius:3px;" class="ent">
+              카페·주유에 매달 <b>213,900원</b>을 쓰는데 보유 카드는 이 항목 혜택이 약하다.
+              <b>연회비를 빼고도 남는 경우에만</b> 제시하므로, 이미 최적인 고객에게는 아무것도 보여주지 않는다.
+            </div>
+          </div>
+
           <!-- 실적 구간 근접 -->
           <div class="pnl">
-            <div class="pnl-t">실적 구간 근접 안내 <i class="mk">6</i></div>
+            <div class="pnl-t">실적 구간 근접 안내 <i class="mk">7</i></div>
             <table class="wft">
               <tr><th>카드</th><th class="n">현재 인정실적</th><th>다음 구간</th><th class="n">남은 금액</th><th class="n">추가 월혜택</th><th class="c">마감</th></tr>
-              <tr><td><b>PayMix 플래티넘</b></td><td class="n">388,900</td><td>50만원 이상</td><td class="n"><b style="color:var(--blue);">111,100</b></td><td class="n" style="color:var(--green);">+7,300</td><td class="c">11일 남음</td></tr>
+              <tr><td><b>PayMix 플래티넘</b></td><td class="n">558,900</td><td>70만원 이상</td><td class="n"><b style="color:var(--blue);">141,100</b></td><td class="n" style="color:var(--green);">+7,300</td><td class="c">11일 남음</td></tr>
             </table>
           </div>
         </div>
@@ -1209,13 +1227,15 @@
           <li><i class="mk">3</i><div><b>보유 카드 중 최선</b> — 주 제안. 이미 가진 카드만으로 도달 가능한 최댓값이다.</div></li>
           <li><i class="mk">4</i><div><b>자사 상품 참고</b> — 해당 카테고리에서 더 유리한 <b>자사</b> 상품이 있을 때만 점선 영역으로 분리 표기한다. <b>타사 카드는 비교 대상이 아니며</b>, 주 제안(보유 카드 재배치)을 대체하지 않는 참고 정보다.</div></li>
           <li><i class="mk">5</i><div><b>차분 근거</b> — 배치 제안의 계산 내역. 각 행이 제안 상세 1건이며 계산 시점 인정률·할인율·한도를 스냅샷으로 보관한다.</div></li>
-          <li><i class="mk">6</i><div><b>구간 근접</b> — 상위 구간까지 남은 금액과 실적 마감 잔여일.</div></li>
+          <li><i class="mk">6</i><div><b>신규 카드 추천</b> — 보유 카드 재배치로 도달할 수 없는 구간을 <b>자사 카탈로그</b> 상품으로 메울 수 있는지 판정한다. 기준선(보유 카드 최적 배치)과 비교해 <b>연회비를 차감하고도 순증이 있는 상품만</b> 제시한다.</div></li>
+          <li><i class="mk">7</i><div><b>구간 근접</b> — 상위 구간까지 남은 금액과 실적 마감 잔여일.</div></li>
         </ul>
       </div>
       <div class="box" style="margin-bottom:6px; padding:0;">
         <div class="t" style="padding:6px 8px 3px;">호출 API</div>
         <div class="api"><span class="m get">GET</span><span class="p">/me/benefit-utilization</span><span class="d">활용도 분석</span></div>
         <div class="api"><span class="m get">GET</span><span class="p">/me/recommendations/{id}</span><span class="d">차분 상세 · 스냅샷</span></div>
+        <div class="api"><span class="m get">GET</span><span class="p">/me/card-suggestions</span><span class="d">신규 카드 추천</span></div>
         <div class="api"><span class="m get">GET</span><span class="p">/me/alerts/tier-gap</span><span class="d">구간 근접</span></div>
       </div>
       <div class="box">
@@ -1224,7 +1244,7 @@
           <code>benefit_rules</code> category_id · tier_id · rate · per_transaction_limit · monthly_item_limit<br>
           <code>spending_categories</code> name · default_performance_rate<br>
           <code>transactions</code> amount · category_id <span style="color:var(--ink3);">(카테고리 집계)</span><br>
-          <code>cards</code> annual_fee <span style="color:var(--ink3);">(자사 상품 참고 시)</span><br>
+          <code>cards</code> annual_fee · card_code <span style="color:var(--ink3);">(자사 상품 추천)</span><br>
           <code>recommendation_details</code> <b>snapshot_channel_rate · snapshot_benefit_rate · snapshot_monthly_limit</b><br>
           <code>card_performance_tiers</code> min_performance <span style="color:var(--ink3);">(구간 근접)</span>
         </div>
@@ -1340,7 +1360,7 @@
         <ul class="anno" style="margin:3px 0 0 0;">
           <li><i class="mk">1</i><div><b>실적 미달 규모</b> — 혜택이 설계되어 있으나 <b>고객에게 도달하지 못한 규모</b>. 이 서비스가 해결하려는 문제의 크기다.</div></li>
           <li><i class="mk">2</i><div><b>채널별 포지션</b> — 각 페이에서 자사 카드가 얼마나 선택받고 있는지. "그릇 안에서의 존재감"을 수치화한다.</div></li>
-          <li><i class="mk">3</i><div><b>평균 인정률과 실적 미달의 상관</b> — 인정률 0%인 카카오페이에서 미달 고객이 집중된다. 정책이 이탈을 만드는 지점.</div></li>
+          <li><i class="mk">3</i><div><b>채널 정책과 이탈의 상관</b> — 업종 할인이 적용되지 않는 채널에 결제가 몰릴수록 고객이 받는 혜택은 줄어든다. 정책이 이탈을 만드는 지점.</div></li>
           <li><i class="mk">4</i><div><b>추이 차트</b> — 간편결제 채널 결제액은 증가, 실물카드는 감소하는 구조적 이동을 확인한다.</div></li>
         </ul>
       </div>
@@ -1383,7 +1403,7 @@
               <div class="pnl-t">시뮬레이션 조건 <i class="mk">1</i></div>
               <div class="lbl">대상 카드</div><div class="inp" style="margin-bottom:3px;">PayMix 플래티넘 ▾</div>
               <div class="lbl">기준월</div><div class="inp" style="margin-bottom:4px;">2026-08 ▾</div>
-              <div class="lbl" style="font-weight:700; color:var(--ink2);">채널 인정률 변경</div>
+              <div class="lbl" style="font-weight:700; color:var(--ink2);">채널 정책 변경</div>
               <table class="wft" style="margin-bottom:4px;">
                 <tr><th>채널</th><th class="c">현재</th><th class="c">변경</th></tr>
                 <tr><td>네이버페이</td><td class="c">50%</td><td class="c"><span class="inp" style="padding:1px 5px;">100</span>%</td></tr>
@@ -1405,14 +1425,14 @@
                 <div class="pnl-t">시뮬레이션 결과 <i class="mk">3</i><span class="sp">기준월 실거래에 변경안을 적용해 재계산 · 실제 정책은 변경되지 않음</span></div>
                 <table class="wft">
                   <tr><th>지표</th><th class="n">변경 전</th><th class="n">변경 후</th><th class="n">차이</th></tr>
-                  <tr><td>실적 충족 고객 수</td><td class="n">6,106</td><td class="n">7,286</td><td class="n"><b style="color:var(--green);">+1,180</b></td></tr>
-                  <tr><td>실적 충족률</td><td class="n">59.7%</td><td class="n">71.2%</td><td class="n"><b style="color:var(--green);">+11.5%p</b></td></tr>
-                  <tr><td>인정실적 총액</td><td class="n">43.1억</td><td class="n">52.3억</td><td class="n"><b style="color:var(--green);">+9.2억</b></td></tr>
-                  <tr style="background:var(--red2);"><td><b>혜택 지급 비용</b> <i class="mk">4</i></td><td class="n">4.12억</td><td class="n">5.96억</td><td class="n"><b style="color:var(--red);">+1.84억</b></td></tr>
-                  <tr><td>영향 받는 고객 수</td><td class="n" colspan="2">3,820명</td><td class="n">—</td></tr>
+                  <tr style="background:var(--blue2);"><td><b>혜택 수혜 고객 수</b></td><td class="n">0</td><td class="n">3,411</td><td class="n"><b style="color:var(--green);">+3,411</b></td></tr>
+                  <tr><td>수혜 비율</td><td class="n">0.0%</td><td class="n">50.0%</td><td class="n"><b style="color:var(--green);">+50.0%p</b></td></tr>
+                  <tr><td>1인당 연간 혜택</td><td class="n">0원</td><td class="n">157,200원</td><td class="n"><b style="color:var(--green);">+157,200</b></td></tr>
+                  <tr style="background:var(--red2);"><td><b>혜택 지급 비용</b> <i class="mk">4</i></td><td class="n">0.00억</td><td class="n">5.36억</td><td class="n"><b style="color:var(--red);">+5.36억</b></td></tr>
+                  <tr><td>영향 받는 고객 수</td><td class="n" colspan="2">6,822명</td><td class="n">—</td></tr>
                 </table>
                 <div style="margin-top:4px; padding:4px 6px; background:var(--amber2); border:1px solid #f0d7a4; border-radius:3px;" class="ent">
-                  <b>해석</b> — 인정률을 100%로 올리면 혜택 비용이 <b>연 1.84억 증가</b>하지만, 실적 미달 고객 <b>1,180명</b>이 충족 구간에 진입한다.
+                  <b>해석</b> — 간편결제 건을 업종 할인 대상에 포함하면 혜택 비용이 <b>연 5.36억 증가</b>하지만, <b>3,411명</b>이 새로 혜택을 받게 된다.
                   이 혜택은 <b>이미 상품 설계 시 예산에 반영된 것</b>이며, 현재는 고객에게 도달하지 못한 채 이탈만 유발하고 있다.
                 </div>
               </div>
@@ -1787,7 +1807,7 @@
 
 <!-- ==================== 8. API 명세 ==================== -->
 <div class="page">
-  <div class="ph"><div class="no">8</div><h2>API 명세</h2><div class="sub">OAS 3.0.3 · 32 Path / 39 Operation · 48 Schema</div></div>
+  <div class="ph"><div class="no">8</div><h2>API 명세</h2><div class="sub">OAS 3.0.3 · 34 Path / 41 Operation · 54 Schema</div></div>
 
   <div class="row">
     <div class="col">
@@ -1801,15 +1821,15 @@
       <table style="font-size:9.5px;">
         <tr><th class="c" style="width:44px;">코드</th><th style="width:26%;">의미</th><th>대표 사례</th><th class="c" style="width:40px;">정의</th></tr>
         <tr><td class="c"><b>400</b></td><td>요청 값 검증 실패</td><td>시뮬레이션 파라미터 범위 초과 <span style="color:var(--ink3);">(화면 7 예외)</span></td><td class="c">15</td></tr>
-        <tr><td class="c"><b>401</b></td><td>미인증 / 토큰 만료</td><td>로그인 필요</td><td class="c">38</td></tr>
-        <tr><td class="c"><b>403</b></td><td>액터 권한 불일치</td><td>고객이 <span class="mono">/issuer/**</span> 접근</td><td class="c">18</td></tr>
-        <tr><td class="c"><b>404</b></td><td>리소스 없음</td><td>존재하지 않는 카드·제안 ID</td><td class="c">20</td></tr>
+        <tr><td class="c"><b>401</b></td><td>미인증 / 토큰 만료</td><td>로그인 필요</td><td class="c">40</td></tr>
+        <tr><td class="c"><b>403</b></td><td>액터 권한 불일치</td><td>고객이 <span class="mono">/issuer/**</span> 접근</td><td class="c">20</td></tr>
+        <tr><td class="c"><b>404</b></td><td>리소스 없음</td><td>존재하지 않는 카드·제안 ID</td><td class="c">21</td></tr>
         <tr><td class="c"><b>409</b></td><td>상태 충돌</td><td>이미 연결된 카드 재연결</td><td class="c">5</td></tr>
-        <tr><td class="c"><b>422</b></td><td>처리 불가</td><td>거래 데이터 부족 <span style="color:var(--ink3);">(화면 3 예외)</span></td><td class="c">5</td></tr>
+        <tr><td class="c"><b>422</b></td><td>처리 불가</td><td>거래 데이터 부족 <span style="color:var(--ink3);">(화면 3 예외)</span></td><td class="c">6</td></tr>
       </table>
       <div class="box blue" style="margin-top:5px;">
         <div class="ent">모든 에러는 <code class="mono">components/responses</code> 에 정의하고 <span class="mono">$ref</span> 로 재사용한다.
-        공통 스키마 재사용 횟수 <b>205회</b>, 미사용 스키마 <b>0개</b>.</div>
+        공통 스키마 재사용 횟수 <b>220회</b>, 미사용 스키마 <b>0개</b>.</div>
       </div>
     </div>
 
@@ -1819,9 +1839,9 @@
         <tr><th class="c" style="width:38px;">화면</th><th>태그</th><th class="c" style="width:34px;">API</th><th>대표 엔드포인트</th></tr>
         <tr><td class="c">1</td><td>Auth</td><td class="c">3</td><td class="mono" style="font-size:8.5px;">/auth/signup · /auth/login</td></tr>
         <tr><td class="c">2</td><td>Customer-Card</td><td class="c">5</td><td class="mono" style="font-size:8.5px;">/me/cards · /cards/catalog</td></tr>
-        <tr><td class="c">3</td><td>Customer-Diagnosis</td><td class="c">3</td><td class="mono" style="font-size:8.5px;">/me/diagnosis/performance</td></tr>
+        <tr><td class="c">3</td><td>Customer-Diagnosis</td><td class="c">4</td><td class="mono" style="font-size:8.5px;">/me/diagnosis/performance</td></tr>
         <tr><td class="c">4</td><td>Customer-Channel</td><td class="c">3</td><td class="mono" style="font-size:8.5px;">/me/channels/usage · /me/subscriptions</td></tr>
-        <tr><td class="c">5</td><td>Customer-Recommendation</td><td class="c">6</td><td class="mono" style="font-size:8.5px;">/me/recommendations · /me/benefit-utilization</td></tr>
+        <tr><td class="c">5</td><td>Customer-Recommendation</td><td class="c">7</td><td class="mono" style="font-size:8.5px;">/me/recommendations · /me/card-suggestions</td></tr>
         <tr><td class="c">6</td><td>Issuer-Dashboard</td><td class="c">2</td><td class="mono" style="font-size:8.5px;">/issuer/dashboard/channels</td></tr>
         <tr><td class="c">7</td><td>Issuer-Simulation</td><td class="c">2</td><td class="mono" style="font-size:8.5px;">/issuer/simulations · /issuer/segments</td></tr>
         <tr><td class="c">8</td><td>Issuer-CardRule</td><td class="c">12</td><td class="mono" style="font-size:8.5px;">/issuer/cards/{id}/channel-rates</td></tr>
@@ -1833,7 +1853,7 @@
       <table style="font-size:9.5px;">
         <tr><td style="width:30%;"><b>경로 구분</b></td><td><span class="mono">/me/**</span> 고객 · <span class="mono">/issuer/**</span> 카드사 · <span class="mono">/external/**</span> 외부. 경로만 봐도 액터가 드러난다.</td></tr>
         <tr><td><b>메서드</b></td><td>조회 GET · 생성 POST(201) · 전체 갱신 PUT · 부분 갱신 PATCH · 삭제 DELETE(204)</td></tr>
-        <tr><td><b>스키마 대응</b></td><td>48개 스키마가 DBML 14 테이블과 1:1 대응. 응답 필드가 ERD에 없는 경우 없음</td></tr>
+        <tr><td><b>스키마 대응</b></td><td>54개 스키마가 DBML 14 테이블과 1:1 대응. 응답 필드가 ERD에 없는 경우 없음</td></tr>
         <tr><td><b>Security Schemes</b></td><td style="color:var(--ink3);">평가 범위 제외 지침에 따라 정의하지 않음 (토큰 규칙은 info 에 서술)</td></tr>
       </table>
 
