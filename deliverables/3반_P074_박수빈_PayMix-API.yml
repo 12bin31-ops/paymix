@@ -2022,6 +2022,20 @@ components:
         currentTierName:
           type: string
           example: 30만원 이상
+        tierMin:
+          type: integer
+          description: 현재 구간의 하한 인정실적(원)
+          example: 300000
+        tierMax:
+          type: integer
+          nullable: true
+          description: 현재 구간의 상한 인정실적(원). null 이면 상한 없음
+          example: 699999
+        nextTierMin:
+          type: integer
+          nullable: true
+          description: 다음 구간의 하한 인정실적(원). 진행률 게이지 산출에 사용
+          example: 700000
         nextTierName:
           type: string
           nullable: true
@@ -2038,7 +2052,41 @@ components:
         nominalBenefit:
           type: integer
           description: 한도 적용 전 명목 혜택(원). 실효 혜택과의 차이가 한도 소진분이다
-          example: 41000
+          example: 19460
+        capLoss:
+          type: integer
+          description: 한도에 걸려 잘린 금액(원) = nominalBenefit − effectiveBenefit
+          example: 3140
+        totalCapped:
+          type: boolean
+          description: 카드 통합 월 한도에 도달했는지 여부
+          example: false
+        totalMonthlyBenefitLimit:
+          type: integer
+          nullable: true
+          description: 카드 통합 월 한도(원)
+          example: 50000
+        transactionCount:
+          type: integer
+          description: 기준월 거래 건수
+          example: 14
+        benefitBreakdown:
+          type: array
+          description: 카테고리별 혜택 산출 내역
+          items:
+            $ref: '#/components/schemas/BenefitBreakdownItem'
+        benefitBlockedAmount:
+          type: integer
+          description: |
+            업종 할인이 적용되지 않은 결제액 합계(원).
+            실적에는 반영되지만 할인만 받지 못한 금액이며, 상세는 benefit-blocks 에서 조회한다.
+          example: 573000
+        benefitBlockedChannels:
+          type: array
+          description: 업종 할인이 적용되지 않는 채널명
+          items:
+            type: string
+          example: [네이버페이, 카카오페이]
         channelReward:
           type: integer
           description: 채널 자체 적립(원)
@@ -2053,6 +2101,52 @@ components:
         pointBalance:
           type: integer
           example: 12400
+        pointExpiring:
+          type: integer
+          description: 소멸 예정 포인트(P)
+          example: 3200
+        pointExpiringAt:
+          type: string
+          format: date
+          nullable: true
+          description: 가장 가까운 포인트 소멸 예정일
+          example: '2026-11-30'
+
+    BenefitBreakdownItem:
+      type: object
+      description: 카테고리 1건의 혜택 산출 내역 (건당·항목월 한도 적용 결과)
+      properties:
+        categoryId:
+          type: integer
+          format: int64
+          example: 1
+        categoryName:
+          type: string
+          example: 외식
+        benefitType:
+          type: string
+          enum: [DISCOUNT, POINT]
+          example: DISCOUNT
+        rate:
+          type: number
+          format: double
+          example: 0.07
+        raw:
+          type: integer
+          description: 항목별 월 한도를 적용하기 전 금액(원)
+          example: 12600
+        applied:
+          type: integer
+          description: 한도 적용 후 실제 반영된 금액(원)
+          example: 12600
+        monthlyItemLimit:
+          type: integer
+          nullable: true
+          example: 14000
+        capped:
+          type: boolean
+          description: 항목별 월 한도에 도달했는지 여부
+          example: false
 
     ExclusionItem:
       type: object
@@ -2086,6 +2180,10 @@ components:
           type: integer
           description: 실제 인정된 금액(원)
           example: 0
+        lostAmount:
+          type: integer
+          description: 실적에서 빠진 금액(원) = amount − recognizedAmount
+          example: 68000
         exclusionReason:
           type: string
           enum: [CATEGORY_EXCLUDED, CHANNEL_NOT_RECOGNIZED, PARTIALLY_RECOGNIZED]
@@ -2259,6 +2357,10 @@ components:
           type: integer
           description: 업종 할인 미적용으로 받지 못한 혜택(원)
           example: 5376
+        lostAmount:
+          type: integer
+          description: 약관상 실적 제외로 인정되지 않은 금액(원) = amount − recognizedAmount
+          example: 150000
 
     Subscription:
       type: object
@@ -2447,6 +2549,24 @@ components:
           type: string
           description: 계산 시점 권장 카드명 (스냅샷)
           example: PayMix 플래티넘
+        currentRate:
+          type: number
+          format: double
+          nullable: true
+          description: 현재 카드의 해당 채널 실적 인정률
+          example: 1.0
+        currentEligible:
+          type: boolean
+          nullable: true
+          description: |
+            현재 카드가 이 채널 결제에 업종 할인을 적용하는지 여부.
+            false → true 로 바뀌는 것이 이 제안의 핵심 개선 지점이다.
+          example: false
+        suggestedEligible:
+          type: boolean
+          nullable: true
+          description: 권장 카드의 업종 할인 적용 여부
+          example: true
         snapshotChannelRate:
           type: number
           format: double

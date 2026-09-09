@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" as="style" crossorigin
+ href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --ink:#0d1017; --ink2:#4a5261; --ink3:#8b93a1;
+    --line:#e2e5ea; --line2:#cfd4dc; --bg:#f7f8fa;
+    --blue:#1b4dff; --blue-l:#eef2ff; --blue-b:#c3d0ff;
+    --green:#047857; --green-l:#ecfdf5; --green-b:#a7e0c8;
+    --red:#dc2626; --red-l:#fef2f2; --red-b:#f7c3c3;
+  }
+  html,body{width:1600px;height:900px;background:#fff;}
+  body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;
+       color:var(--ink);-webkit-font-smoothing:antialiased;font-feature-settings:'tnum';
+       word-break:keep-all;overflow-wrap:break-word;}
+  .wrap{width:1600px;height:900px;padding:28px 32px 26px;position:relative;overflow:hidden;}
+
+  /* 헤더 */
+  .hd{display:flex;align-items:flex-end;gap:16px;margin-bottom:20px;}
+  .hd h1{font-size:44px;font-weight:800;letter-spacing:-.045em;line-height:1;}
+  .hd .sub{font-size:19px;color:var(--ink3);font-weight:500;padding-bottom:3px;}
+  .hd .rt{margin-left:auto;display:flex;gap:8px;padding-bottom:4px;}
+  .chip{font-size:16px;font-weight:700;padding:7px 15px;border-radius:999px;border:1px solid var(--line2);color:var(--ink2);}
+  .chip.b{background:var(--blue-l);border-color:var(--blue-b);color:var(--blue);}
+  .chip.g{background:var(--green-l);border-color:var(--green-b);color:var(--green);}
+
+  /* 진입 */
+  .entry{display:flex;align-items:center;gap:18px;margin-bottom:20px;}
+  .s1{width:280px;border:2.5px solid var(--ink);border-radius:13px;padding:15px 18px;background:#fff;}
+  .s1 .n{font-size:15px;color:var(--ink3);font-weight:700;letter-spacing:.04em;}
+  .s1 .t{font-size:25px;font-weight:800;letter-spacing:-.03em;margin-top:3px;}
+  .s1 .d{font-size:16px;color:var(--ink3);margin-top:4px;}
+  .fork{border:2px dashed var(--line2);border-radius:12px;padding:13px 18px;background:var(--bg);}
+  .fork .k{font-size:15px;color:var(--ink3);font-weight:600;}
+  .fork .v{font-size:20px;font-weight:700;margin-top:2px;letter-spacing:-.02em;}
+  .fork .v em{font-style:normal;color:var(--blue);}
+  .fork .v i{font-style:normal;color:var(--green);}
+
+  /* 레인 */
+  .lane{border-radius:16px;padding:16px 16px 18px;position:relative;margin-bottom:14px;}
+  .lane.cust{border:2px solid var(--blue-b);background:linear-gradient(112deg,#f7f9ff,#fff 62%);}
+  .lane.iss {border:2px solid var(--green-b);background:linear-gradient(112deg,#f4fcf8,#fff 62%);}
+  .lane-h{display:flex;align-items:baseline;gap:12px;margin-bottom:13px;}
+  .lane-h .nm{font-size:26px;font-weight:800;letter-spacing:-.03em;}
+  .lane.cust .lane-h .nm{color:var(--blue);}
+  .lane.iss  .lane-h .nm{color:var(--green);}
+  .lane-h .fl{font-size:17px;color:var(--ink3);font-weight:600;}
+  .lane-h .rt{margin-left:auto;font-size:16px;color:var(--ink3);}
+
+  .row{display:flex;align-items:stretch;gap:12px;}
+  .card{flex:1;background:#fff;border:2px solid var(--line);border-radius:13px;padding:15px 16px;position:relative;display:flex;flex-direction:column;}
+  .card.on{border-color:var(--blue);border-width:2px;box-shadow:0 6px 20px rgba(27,77,255,.12);}
+  .card.ong{border-color:var(--green);border-width:2px;box-shadow:0 6px 20px rgba(4,120,87,.12);}
+  .card .n{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;
+           background:var(--ink);color:#fff;font-size:16px;font-weight:800;}
+  .card.on .n{background:var(--blue);} .card.ong .n{background:var(--green);}
+  .card .t{font-size:22px;font-weight:800;letter-spacing:-.028em;margin-top:7px;}
+  .card .d{font-size:16.5px;color:var(--ink3);line-height:1.58;margin-top:8px;}
+  .card .ex{align-self:flex-start;margin-top:auto;font-size:15px;font-weight:700;
+            padding:5px 11px;border-radius:6px;background:var(--red-l);color:var(--red);border:1px solid var(--red-b);}
+  .arw{display:flex;align-items:center;font-size:26px;color:var(--line2);font-weight:300;}
+  .lane.cust .arw{color:#9db1ff;} .lane.iss .arw{color:#7cc6ac;}
+
+  /* 그룹(진단) */
+  .grp{flex:2.06;border:2px dashed var(--blue-b);border-radius:13px;padding:10px 11px 11px;background:rgba(238,242,255,.5);}
+  .grp .gl{font-size:15px;font-weight:700;color:var(--blue);letter-spacing:.02em;margin:0 0 7px 3px;}
+  .grp .in{display:flex;gap:10px;}
+  .grp .card{border-color:var(--blue-b);}
+
+  /* 순환 */
+  .loop{display:flex;align-items:center;gap:14px;border:2px solid #f0d7a4;background:#fffbeb;
+        border-radius:13px;padding:15px 20px;}
+  .loop .ic{font-size:24px;color:#b45309;}
+  .loop .tx{font-size:18px;color:#5c4708;line-height:1.55;}
+  .loop b{color:#0d1017;}
+  .loop code{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:16.5px;
+             background:#fff;border:1px solid #f0d7a4;border-radius:5px;padding:1px 6px;}
+
+  /* 블롭 */
+  .blob{position:absolute;right:-190px;top:-140px;width:640px;height:640px;pointer-events:none;opacity:.13;}
+  .blob span{position:absolute;border-radius:50%;}
+  .b1{inset:8% 6% 20% 14%;background:conic-gradient(from 210deg at 52% 46%,#0a1f7a,#1b4dff 18%,#7db3ff 32%,#fff 40%,#6ee7ff 50%,#1b4dff 64%,#c026d3 78%,#4c1d95 88%,#0a1f7a);filter:blur(30px);}
+  .b2{inset:30% 28% 12% 8%;background:radial-gradient(circle at 38% 34%,#fff,#a5c8ff 18%,#1b4dff 48%,transparent 74%);filter:blur(24px);}
+</style></head>
+<body><div class="wrap">
+  <div class="blob"><span class="b1"></span><span class="b2"></span></div>
+
+  <div class="hd" style="margin-bottom:16px;">
+    <div class="rt" style="margin-left:0;padding-bottom:0;"><span class="chip b">고객 5화면</span><span class="chip g">카드사 3화면</span><span class="chip">예외 3종</span></div>
+  </div>
+
+  <div class="entry">
+    <div class="s1">
+      <div class="n">화면 1 · 공통</div>
+      <div class="t">로그인 / 회원가입</div>
+      <div class="d">이메일 · 비밀번호</div>
+    </div>
+    <div class="arw" style="font-size:30px">→</div>
+    <div class="fork">
+      <div class="k">가입 유형(role)으로 진입 화면 분기</div>
+      <div class="v"><em>고객 → 화면 2</em> &nbsp;·&nbsp; <i>카드사 담당자 → 화면 6</i></div>
+    </div>
+    <div style="margin-left:auto;font-size:16px;color:var(--ink3);text-align:right;line-height:1.62">
+      미인증 시 로그인 화면으로 복귀<br>액터 불일치 시 접근 차단
+    </div>
+  </div>
+
+  <div class="lane cust">
+    <div class="lane-h"><span class="nm">고객</span><span class="fl">연결 → 진단 → 개선</span>
+      <span class="rt">가진 카드를 어디에 물릴지 결정한다</span></div>
+    <div class="row">
+      <div class="card">
+        <span class="n">2</span>
+        <div class="t">카드 데이터 연결</div>
+        <div class="d">보유 자사 카드 연결<br>결제 데이터 동기화<br><span style="color:#b6bcc7">타사 카드는 대상 아님</span></div>
+      </div>
+      <div class="arw">→</div>
+      <div class="grp">
+        <div class="gl">현황 진단</div>
+        <div class="in">
+          <div class="card">
+            <span class="n">3</span>
+            <div class="t">실적·연회비 진단</div>
+            <div class="d">인정 실적 · 약관상 제외<br><b style="color:#dc2626">업종 할인 미적용</b> · 연간 순이익</div>
+            <span class="ex">거래 데이터 부족 → 진단 불가</span>
+          </div>
+          <div class="card">
+            <span class="n">4</span>
+            <div class="t">페이·정기결제 현황</div>
+            <div class="d">채널별 결제 비중 · 인정 실적<br>정기결제 실적 인정 여부<br><span style="color:#b6bcc7">할인 미적용 채널 식별</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="arw">→</div>
+      <div class="card on" style="flex:1.32">
+        <span class="n">5</span>
+        <div class="t">개선 제안</div>
+        <div class="d">결제처별 권장 카드 배치 · 정기결제 이전<br>항목별 혜택 활용도 · 자사 신규 카드 추천</div>
+        <span class="ex">이미 최적 → 변경 실익 없음</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="lane iss">
+    <div class="lane-h"><span class="nm">카드사 담당자</span><span class="fl">분석 → 검증 → 반영</span>
+      <span class="rt">배제할지 인정할지, 손익을 먼저 계산한다</span></div>
+    <div class="row">
+      <div class="card">
+        <span class="n">6</span>
+        <div class="t">채널 포지션 대시보드</div>
+        <div class="d">페이별 자사 카드 연결 비중 · 결제액 추이<br>실적 미달 고객 규모 · 간편결제 결제 비중</div>
+      </div>
+      <div class="arw">→</div>
+      <div class="card ong">
+        <span class="n">7</span>
+        <div class="t">혜택 정책 시뮬레이션</div>
+        <div class="d">업종 할인 적용 · 한도 · 실적 구간 변경 시<br>비용/수혜 사전 계산 · 세그먼트 추출</div>
+        <span class="ex">파라미터 범위 초과 → 검증 오류</span>
+      </div>
+      <div class="arw">→</div>
+      <div class="card">
+        <span class="n">8</span>
+        <div class="t">카드·혜택 규칙 관리</div>
+        <div class="d">상품 · 실적 구간 · 카테고리별 혜택<br>채널별 인정률 및 할인 적용 설정</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="loop">
+    <span class="ic">↺</span>
+    <div class="tx">
+      두 액터는 <code>card_channel_rates</code> <b>(카드 × 채널 교차 엔터티)</b>에서 만난다 &nbsp;—&nbsp;
+      화면 8에서 <b>업종 할인 적용 여부</b>를 바꾸면 화면 3·5의 결과가 즉시 달라지고,
+      화면 7은 <b>그 변경 전에 손익을 미리 계산</b>한다.
+    </div>
+  </div>
+</div></body></html>
