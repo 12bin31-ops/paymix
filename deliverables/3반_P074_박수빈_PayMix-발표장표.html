@@ -286,47 +286,78 @@
 
 <!-- ==================== 4. Pain Point — 소비자 ==================== -->
 <div class="slide">
-  <div class="sh"><div class="no">4</div><h2>Pain Point &mdash; 소비자</h2><div class="sub">&ldquo;쓰긴 쓰는데, 뭘 받고 있는지 모른다&rdquo;</div></div>
+  <div class="sh"><div class="no">4</div><h2>Pain Point &mdash; 소비자</h2><div class="sub">&ldquo;실적은 채웠는데, 할인은 왜 0원이지?&rdquo;</div></div>
 
-  <div class="row" style="align-items:stretch;">
-    <div class="col" style="flex:1.05;">
-      <table>
-        <tr><th style="width:22%;">구분</th><th>Pain Point</th><th class="c" style="width:16%;">해결 화면</th></tr>
-        <tr><td><span class="tag r">핵심</span> <b>실적</b></td><td>간편결제분이 실적에 잡히는지 알 수 없음<br>왜 미달인지 모름</td><td class="c">화면 3</td></tr>
-        <tr><td><span class="tag r">핵심</span> <b>정기결제</b></td><td>어느 카드에 물렸는지 잊음<br>실적 기여가 0인 것을 모름</td><td class="c">화면 4</td></tr>
-        <tr><td>혜택</td><td>한도 소진 여부를 모름 · 포인트 소멸</td><td class="c">화면 3 · 5</td></tr>
-        <tr><td>연회비</td><td>혜택은 매달 조금씩, 연회비는 한 번에 큰돈<br><b>체감 시점 불일치</b>로 이득인데 손해로 인식</td><td class="c">화면 3</td></tr>
-        <tr><td>배치</td><td>어느 페이에 어느 카드를 물릴지 <b>판단 근거가 없음</b></td><td class="c">화면 5</td></tr>
-      </table>
+  <table style="font-size:12px;">
+    <tr>
+      <th style="width:4%;"></th>
+      <th style="width:24%;">무엇을 모르는가</th>
+      <th style="width:44%;">그래서 얼마나 손해인가 <span style="font-weight:400; color:var(--ink3);">(박수빈 고객 실측 / 2026-08)</span></th>
+      <th style="width:16%;">해결 방식</th>
+      <th class="c" style="width:12%;">화면</th>
+    </tr>
+
+    <tr>
+      <td class="c" style="font-weight:800; color:var(--ink3);">1</td>
+      <td><b>얼마가 실적에 잡히는지</b><div style="color:var(--ink3);">명세서엔 결제 총액만 나온다</div></td>
+      <td>142만원을 결제했지만 실적으로 인정된 건 <b>113만원</b>.<br>
+        나머지 <b>29만원</b>은 통신비·공과금·구독료·선불충전 &mdash;
+        <span style="color:var(--ink3);">카드사 약관상 원래 제외 항목이라 <b>카드를 바꿔도 달라지지 않는다</b></span></td>
+      <td>제외 내역을 <b>사유별로</b> 분해해 보여준다</td>
+      <td class="c"><span class="tag b">3</span></td>
+    </tr>
+
+    <tr style="background:var(--red2);">
+      <td class="c" style="font-weight:800; color:var(--red);">2</td>
+      <td><b style="color:var(--red);">할인을 못 받고 있다는 사실</b>
+        <div style="color:var(--ink3);">실적은 잘 쌓이니 문제없다고 생각한다</div>
+        <span class="tag r" style="font-size:9px; margin-top:3px; display:inline-block;">핵심</span></td>
+      <td><b>클래식 카드 &mdash; 실적 573,000원으로 최고 등급.
+        그런데 받은 할인은 <span style="color:var(--red);">0원</span>.</b><br>
+        네이버·카카오페이를 거친 <b>573,000원</b>이 가맹점을 &lsquo;네이버파이낸셜&rsquo;로만 인식해
+        <b>업종별 할인 대상에서 제외</b>됐다. <span style="color:var(--red); font-weight:700;">매달 13,100원 손실.</span></td>
+      <td><b>할인을 못 받은 결제</b>를 건별로 짚어준다</td>
+      <td class="c"><span class="tag b">3</span> <span class="tag b">4</span></td>
+    </tr>
+
+    <tr>
+      <td class="c" style="font-weight:800; color:var(--ink3);">3</td>
+      <td><b>어느 페이에 어느 카드를 물릴지</b><div style="color:var(--ink3);">판단 근거가 어디에도 없다</div></td>
+      <td>결제처를 바꿀 필요도 없고 카드를 새로 만들 필요도 없다.
+        <b>이미 가진 카드를 어디에 물릴지만</b> 바꾸면 되는데 그 방법을 모른다.
+        <span style="color:var(--green); font-weight:700;">재배치만으로 연 288,240원 회복 가능.</span></td>
+      <td><b>결제처별 권장 카드</b>를 한 장으로 제시</td>
+      <td class="c"><span class="tag b">5</span></td>
+    </tr>
+  </table>
+
+  <div class="row" style="margin-top:9px;">
+    <div class="col" style="flex:1.3;">
+      <div class="box red" style="height:100%;">
+        <div class="t" style="color:var(--red);">손실은 성격이 다른 두 가지다 &mdash; 섞으면 답이 안 나온다</div>
+        <table style="font-size:11.5px; margin-top:5px;">
+          <tr><th style="width:34%;">유형</th><th>원인</th><th class="c" style="width:24%;">카드 바꾸면?</th></tr>
+          <tr><td><b>약관상 실적 제외</b></td><td>통신비·공과금·구독료·선불충전</td>
+              <td class="c" style="color:var(--ink3);">달라지지 않음</td></tr>
+          <tr style="background:#fff;"><td><b style="color:var(--red);">업종 할인 미적용</b></td>
+              <td>간편결제 경유로 <b>업종 판정 불가</b></td>
+              <td class="c"><b style="color:var(--green);">전액 회복</b></td></tr>
+        </table>
+        <div style="margin-top:5px; font-size:11.5px;">
+          기존 서비스들은 이 둘을 뭉뚱그려 &ldquo;실적이 부족합니다&rdquo;라고만 말한다.
+          <b>PayMix는 분리해서, 고칠 수 있는 것만 고치라고 말한다.</b>
+        </div>
+      </div>
     </div>
-
-    <div class="col" style="flex:1;">
-      <h3 style="margin-top:0;">실측 &mdash; 박수빈 고객 / 2026-08</h3>
-      <svg viewBox="0 0 420 172" style="width:100%; height:auto;">
-        <text x="0" y="11" font-size="10.5" font-weight="800" fill="#525a68">PayMix 플래티넘 &mdash; 실적은 왜 미달인가</text>
-        <text x="0" y="30" font-size="10" fill="#8b93a1">총 결제액</text>
-        <rect x="0" y="35" width="410" height="24" rx="3" fill="#e7e9ee"/>
-        <text x="402" y="52" font-size="12.5" font-weight="800" fill="#525a68" text-anchor="end">641,800</text>
-
-        <text x="0" y="76" font-size="10" fill="#8b93a1">인정 실적</text>
-        <rect x="0" y="81" width="357" height="24" rx="3" fill="#1b4dff"/>
-        <rect x="357" y="81" width="53" height="24" rx="3" fill="#dc2626"/>
-        <text x="349" y="98" font-size="12.5" font-weight="800" fill="#fff" text-anchor="end">558,900</text>
-        <text x="383" y="98" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">82,900</text>
-
-        <text x="0" y="124" font-size="10.5" fill="#525a68">
-          <tspan font-weight="800" fill="#dc2626">82,900원</tspan>이 실적에서 사라진 이유
-        </text>
-        <text x="0" y="140" font-size="10" fill="#8b93a1">SKT 통신요금 68,000 &mdash; 카테고리 제외</text>
-        <text x="0" y="155" font-size="10" fill="#8b93a1">유튜브 프리미엄 14,900 &mdash; 구독 카테고리 제외</text>
-        <text x="0" y="170" font-size="10.5" font-weight="800" fill="#1b4dff">다음 실적 구간까지 141,100원 남음</text>
-      </svg>
-
-      <div class="box red" style="margin-top:7px; font-size:12px;">
-        <b>보유한 다른 카드(클래식)는 더 심각하다.</b><br>
-        실적은 100% 인정되는데 네이버·카카오페이 결제
-        <b style="font-size:14px;">740,000원</b>에 업종 할인이 <b style="color:var(--red);">한 푼도 붙지 않는다.</b>
-        (명목 혜택 = <b>0원</b>)
+    <div class="col">
+      <div class="box" style="height:100%;">
+        <div class="t">왜 지금까지 몰랐나</div>
+        <div style="font-size:11.5px; line-height:1.75; margin-top:4px;">
+          명세서에는 <b>결제 총액</b>만 찍힌다. 실적으로 얼마가 인정됐는지,
+          그 결제가 업종 할인을 받았는지는 <b>어디에도 표시되지 않는다.</b><br>
+          카드사는 그 데이터를 가지고 있지만 고객에게 보여준 적이 없다.
+          <b style="color:var(--blue);">PayMix는 이미 있는 데이터를 고객 언어로 번역할 뿐이다.</b>
+        </div>
       </div>
     </div>
   </div>
@@ -336,53 +367,74 @@
 
 <!-- ==================== 5. Pain Point — 카드사 ==================== -->
 <div class="slide">
-  <div class="sh"><div class="no">5</div><h2>Pain Point &mdash; 카드사</h2><div class="sub">&ldquo;배제할지 인정할지, 손익을 계산해본 적이 없다&rdquo;</div></div>
+  <div class="sh"><div class="no">5</div><h2>Pain Point &mdash; 카드사</h2><div class="sub">&ldquo;간편결제를 할인에서 빼면 비용은 줄지만, 그 대가는 계산해본 적이 없다&rdquo;</div></div>
 
-  <div class="row" style="align-items:stretch;">
-    <div class="col" style="flex:1.05;">
-      <table>
-        <tr><th style="width:22%;">구분</th><th>Pain Point</th><th class="c" style="width:16%;">해결 화면</th></tr>
-        <tr><td><span class="tag r">핵심</span> <b>정책</b></td><td>간편결제를 실적에서 배제하면 비용은 줄고 이탈은 늘어남<br><b>어느 쪽이 큰지 계산해본 적 없음</b></td><td class="c">화면 7</td></tr>
-        <tr><td><span class="tag r">핵심</span> <b>정기결제</b></td><td>이탈 장벽이 가장 높은 결제인데 유치 경쟁이 약함</td><td class="c">화면 6</td></tr>
-        <tr><td>이탈</td><td>해지 +14.4% · 휴면 14.9% 사상 최고</td><td class="c">화면 6</td></tr>
-        <tr><td>채널</td><td>페이별 자사 카드 포지션 미파악</td><td class="c">화면 6</td></tr>
-        <tr><td>예산</td><td>혜택 예산을 어느 카테고리·채널에 배분할지 근거 부재</td><td class="c">화면 7</td></tr>
-        <tr><td>설계</td><td>명목 혜택률과 실효 혜택률의 갭을 모름</td><td class="c">화면 8</td></tr>
-      </table>
+  <table style="font-size:12px;">
+    <tr>
+      <th style="width:4%;"></th>
+      <th style="width:24%;">무엇을 모르는가</th>
+      <th style="width:44%;">그래서 무엇이 일어나는가</th>
+      <th style="width:16%;">해결 방식</th>
+      <th class="c" style="width:12%;">화면</th>
+    </tr>
+
+    <tr style="background:var(--red2);">
+      <td class="c" style="font-weight:800; color:var(--red);">1</td>
+      <td><b style="color:var(--red);">배제 정책의 손익</b>
+        <div style="color:var(--ink3);">간편결제를 할인에서 빼면 비용은 준다. 그런데 그 대가는?</div>
+        <span class="tag r" style="font-size:9px; margin-top:3px; display:inline-block;">핵심</span></td>
+      <td>고객은 <b>실적을 채우고도 할인을 못 받는다.</b> 혜택이 없으니 카드를 안 쓰고, 안 쓰니 해지한다.
+        <b>해지 14.4%↑ · 휴면 14.9%</b>(사상 최고).<br>
+        <span style="color:var(--ink3);">문제는 이 손실이 <b>장부에 안 잡힌다</b>는 것이다. 줄어든 혜택 비용만 보인다.</span></td>
+      <td>변경 전후를 <b>실거래로 재계산</b>해 비용과 수혜를 나란히 놓는다</td>
+      <td class="c"><span class="tag g">7</span></td>
+    </tr>
+
+    <tr>
+      <td class="c" style="font-weight:800; color:var(--ink3);">2</td>
+      <td><b>채널별 자사 카드 포지션</b><div style="color:var(--ink3);">각 페이에서 우리 카드가 얼마나 선택받는지</div></td>
+      <td>간편지급 시장의 <b>70.3%가 핀테크</b>, 카드사는 29.7%.
+        결제의 절반이 페이로 갔는데 <b>어느 페이에서 밀리는지 채널 단위로 본 적이 없다.</b><br>
+        <span style="color:var(--ink3);">대항(JUSTOUCH·EMV QR·오픈페이)은 세 번 다 실패했다.</span></td>
+      <td>채널별 <b>연결 비중 · 결제액 추이 · 미달 고객</b>을 한 화면에</td>
+      <td class="c"><span class="tag g">6</span></td>
+    </tr>
+
+    <tr>
+      <td class="c" style="font-weight:800; color:var(--ink3);">3</td>
+      <td><b>정책을 바꾸면 누가 영향받는지</b><div style="color:var(--ink3);">혜택 예산을 어디에 배분할 근거가 없다</div></td>
+      <td>정책 변경의 영향 범위를 <b>사전에 특정하지 못한다.</b>
+        바꿔보고 결과를 기다리는 방식으로는 되돌릴 수 없다.</td>
+      <td>조건에 맞는 <b>고객군을 추출</b>해 안내 대상으로 지정</td>
+      <td class="c"><span class="tag g">7</span></td>
+    </tr>
+  </table>
+
+  <div class="row" style="margin-top:9px;">
+    <div class="col" style="flex:1.25;">
+      <div class="box green" style="height:100%;">
+        <div class="t" style="color:var(--green);">화면 7이 답하는 질문 &mdash; 실측</div>
+        <table style="font-size:11.5px; margin-top:5px;">
+          <tr><th>클래식 카드의 네이버·카카오페이 업종 할인 <b>제외 &rarr; 적용</b></th><th class="n" style="width:26%;">변화</th></tr>
+          <tr><td>혜택 수혜 고객</td><td class="n"><b style="color:var(--green);">0 &rarr; 3,411명</b></td></tr>
+          <tr><td>1인당 연간 혜택</td><td class="n"><b>0 &rarr; 157,200원</b></td></tr>
+          <tr style="background:#fff;"><td><b>혜택 지급 비용</b></td><td class="n"><b style="color:var(--red);">+5.36억 / 년</b></td></tr>
+        </table>
+        <div style="margin-top:5px; font-size:11.5px;">
+          <b>이 비용은 새로 쓰는 돈이 아니다.</b> 이미 상품 설계 때 예산에 잡아둔 혜택인데,
+          업종 판정이 안 돼 <b>고객에게 도달하지 못하고 있을 뿐</b>이다.
+        </div>
+      </div>
     </div>
-
-    <div class="col" style="flex:1;">
-      <h3 style="margin-top:0;">두 목표는 충돌하지 않는다</h3>
-      <svg viewBox="0 0 420 148" style="width:100%; height:auto;">
-        <rect x="0" y="8" width="118" height="60" rx="6" fill="#eef2ff" stroke="#c9d4ff"/>
-        <text x="59" y="30" font-size="11.5" font-weight="800" fill="#1b4dff" text-anchor="middle">고객</text>
-        <text x="59" y="49" font-size="11" font-weight="700" fill="#525a68" text-anchor="middle">혜택 최대화</text>
-
-        <rect x="0" y="80" width="118" height="60" rx="6" fill="#eff7f4" stroke="#b3e2d1"/>
-        <text x="59" y="102" font-size="11.5" font-weight="800" fill="#047857" text-anchor="middle">카드사</text>
-        <text x="59" y="121" font-size="11" font-weight="700" fill="#525a68" text-anchor="middle">결제 집중</text>
-
-        <path d="M124 38 C160 38 160 62 186 68" stroke="#1b4dff" stroke-width="2" fill="none"/>
-        <path d="M186 62 L196 69 L185 74 Z" fill="#1b4dff"/>
-        <path d="M124 110 C160 110 160 86 186 80" stroke="#047857" stroke-width="2" fill="none"/>
-        <path d="M186 74 L196 79 L185 86 Z" fill="#047857"/>
-
-        <rect x="200" y="46" width="106" height="56" rx="6" fill="#1b4dff"/>
-        <text x="253" y="70" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">PayMix</text>
-        <text x="253" y="87" font-size="9.5" fill="#fff" text-anchor="middle" opacity=".9">최적 배치 제안</text>
-
-        <path d="M310 74 L326 74" stroke="#8b93a1" stroke-width="2"/>
-        <path d="M326 68 L336 74 L326 80 Z" fill="#8b93a1"/>
-
-        <text x="344" y="60" font-size="10.5" font-weight="800" fill="#1b4dff">고객</text>
-        <text x="344" y="74" font-size="10" fill="#525a68">이중 혜택 수취</text>
-        <text x="344" y="95" font-size="10.5" font-weight="800" fill="#047857">카드사</text>
-        <text x="344" y="109" font-size="10" fill="#525a68">자사 카드 집중</text>
-      </svg>
-
-      <div class="box green" style="margin-top:6px; font-size:12px;">
-        간편결제 시장은 계속 성장하고, 고객이 <b>페이 적립 + 카드 혜택</b> 이중 수취를 포기할 이유가 없다.
-        <b>실적에서 배제하는 방식은 이탈만 가속</b>한다.
+    <div class="col">
+      <div class="box blue" style="height:100%;">
+        <div class="t" style="color:var(--blue);">두 목표는 충돌하지 않는다</div>
+        <div style="font-size:11.5px; line-height:1.75; margin-top:4px;">
+          고객이 원하는 것은 <b>혜택 최대화</b>, 카드사가 원하는 것은 <b>결제 집중</b>이다.<br><br>
+          고객에게 최적 배치를 제안하면 &mdash; 고객은 받아야 할 혜택을 받고,
+          카드사는 <b>자사 카드로의 결제 집중</b>을 얻는다.
+          간편결제를 배제하는 대신 <b>그 채널 안에서 선택받는다.</b>
+        </div>
       </div>
     </div>
   </div>
