@@ -1,0 +1,139 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" as="style" crossorigin
+ href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0d1017;--ink2:#4a5261;--ink3:#8b93a1;--line:#e2e5ea;--line2:#cfd4dc;--bg:#f7f8fa;
+      --blue:#1b4dff;--blue-l:#eef2ff;--blue-b:#c3d0ff;--red:#dc2626;--red-l:#fef2f2;--red-b:#f7c3c3;
+      --green:#047857;--green-l:#ecfdf5;--green-b:#a7e0c8;--amber:#b45309}
+html,body{width:1600px;height:900px;background:#fff}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;color:var(--ink);
+     -webkit-font-smoothing:antialiased;font-feature-settings:'tnum';word-break:keep-all}
+.wrap{width:1600px;height:900px;padding:26px 32px;position:relative;overflow:hidden;
+      display:flex;flex-direction:column}
+.hd{display:flex;align-items:flex-end;gap:16px;margin-bottom:14px;flex:0 0 auto}
+.hd h1{font-size:40px;font-weight:800;letter-spacing:-.045em;line-height:1}
+.hd .sub{font-size:18px;color:var(--ink3);font-weight:500;padding-bottom:2px}
+.hd .rt{margin-left:auto;display:flex;gap:8px;padding-bottom:3px}
+.chip{font-size:15px;font-weight:700;padding:6px 14px;border-radius:999px;border:2px solid var(--line2);color:var(--ink2)}
+.chip.b{background:var(--blue-l);border-color:var(--blue-b);color:var(--blue)}
+.grid{flex:1;display:grid;grid-template-columns:1.06fr 1fr;grid-template-rows:auto auto;
+      gap:14px 18px;align-content:start}
+h3{font-size:18.5px;font-weight:800;letter-spacing:-.028em;margin-bottom:7px;display:flex;align-items:center;gap:9px}
+h3 i{font-style:normal;font-size:13.5px;font-weight:700;color:var(--ink3)}
+.box{border:2px solid var(--line);border-radius:13px;background:#fff;overflow:hidden}
+.box.red{border-color:var(--red-b);background:linear-gradient(120deg,var(--red-l),#fff 62%);padding:4px 16px}
+table{width:100%;border-collapse:collapse;font-size:15.5px}
+th{background:var(--bg);font-size:13.5px;font-weight:700;color:var(--ink2);padding:6px 13px;text-align:left;border-bottom:2px solid var(--line2)}
+td{padding:6.5px 13px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.code{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-weight:800}
+.n{text-align:right;font-weight:700;color:var(--ink3);font-size:15px}
+.c{text-align:center}
+.ex{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}
+.ex:last-child{border-bottom:none}
+.ex .sc{flex:0 0 50px;height:50px;border-radius:11px;background:var(--ink);color:#fff;
+        display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05}
+.ex .sc b{font-size:20px;font-weight:800}
+.ex .sc span{font-size:11px;opacity:.7}
+.ex .bd{flex:1;min-width:0}
+.ex .t{font-size:16.5px;font-weight:800;letter-spacing:-.02em}
+.ex .d{font-size:14px;color:var(--ink2);line-height:1.45;margin-top:3px}
+.ex .k{display:inline-block;margin-top:4px;font-family:ui-monospace,'SF Mono',Menlo,monospace;
+       font-size:12.5px;font-weight:700;padding:3px 9px;border-radius:6px;
+       background:var(--red-l);color:var(--red);border:1px solid var(--red-b)}
+.ex .k.ok{background:var(--green-l);color:var(--green);border-color:var(--green-b)}
+.pr{flex:0 0 auto;display:flex;gap:12px;margin-top:14px}
+.pi{flex:1;border:2px solid var(--line);border-radius:11px;padding:9px 14px;background:var(--bg)}
+.pi b{display:block;font-size:13.5px;font-weight:800;color:var(--blue);margin-bottom:2px}
+.pi span{font-size:13.5px;color:var(--ink2);line-height:1.45}
+.pi em{font-style:normal;font-weight:700;color:var(--ink)}
+.blob{position:absolute;right:-190px;top:-150px;width:620px;height:620px;pointer-events:none;opacity:.12}
+.blob span{position:absolute;border-radius:50%}
+.b1{inset:8% 6% 20% 14%;background:conic-gradient(from 210deg at 52% 46%,#0a1f7a,#1b4dff 18%,#7db3ff 32%,#fff 40%,#6ee7ff 50%,#1b4dff 64%,#c026d3 78%,#4c1d95 88%,#0a1f7a);filter:blur(30px)}
+.b2{inset:30% 28% 12% 8%;background:radial-gradient(circle at 38% 34%,#fff,#a5c8ff 18%,#1b4dff 48%,transparent 74%);filter:blur(24px)}
+</style></head><body><div class="wrap">
+<div class="blob"><span class="b1"></span><span class="b2"></span></div>
+
+<div class="hd">
+  <h1>오류 · 예외 처리</h1>
+  <div class="sub">HTTP 상태 코드 6종 · 예외 시나리오 3종</div>
+  <div class="rt"><span class="chip b">API 명세 내 109곳 정의</span><span class="chip">공통 스키마 $ref 재사용</span></div>
+</div>
+
+<div class="grid">
+  <div>
+    <h3>HTTP 상태 코드 <i>화면 전 구간 공통</i></h3>
+    <div class="box"><table>
+      <tr><th style="width:80px">코드</th><th style="width:130px">의미</th><th>발생 조건</th><th class="n" style="width:70px">정의</th></tr>
+      <tr><td class="code" style="font-size:17px;color:var(--amber)">400</td><td>검증 실패</td><td>범위·형식·필수값 위반</td><td class="n">15</td></tr>
+      <tr><td class="code" style="font-size:17px">401</td><td>미인증</td><td>로그인 필요 · 토큰 없음/만료</td><td class="n">40</td></tr>
+      <tr><td class="code" style="font-size:17px">403</td><td>권한 없음</td><td>액터 불일치 (고객 ↔ 카드사)</td><td class="n">20</td></tr>
+      <tr><td class="code" style="font-size:17px">404</td><td>리소스 없음</td><td>존재하지 않는 카드 · 제안 · 규칙</td><td class="n">21</td></tr>
+      <tr><td class="code" style="font-size:17px">409</td><td>상태 충돌</td><td>중복 등록 · 처리 불가 상태</td><td class="n">5</td></tr>
+      <tr style="background:var(--red-l)"><td class="code" style="font-size:17px;color:var(--red)">422</td>
+          <td><b>처리 불가</b></td><td><b>거래 데이터 부족으로 진단 불가</b></td><td class="n">6</td></tr>
+    </table></div>
+  </div>
+
+  <div>
+    <h3>예외 시나리오 <i>평가 가점 항목</i></h3>
+    <div class="box red">
+      <div class="ex"><div class="sc"><b>3</b><span>화면</span></div><div class="bd">
+        <div class="t">거래 데이터 부족 → 진단 불가</div>
+        <div class="d">가입 1개월 미만. <b>부정확한 제안보다 진단 불가를 명시</b>하는 편이 신뢰에 유리.
+          필요 기간·경과 일수를 함께 반환해 <b>진행률로 안내</b>한다.</div>
+        <span class="k">422 INSUFFICIENT_TRANSACTION_DATA</span></div></div>
+      <div class="ex"><div class="sc" style="background:var(--green)"><b>5</b><span>화면</span></div><div class="bd">
+        <div class="t">현재 배치가 이미 최적 → 변경 실익 없음</div>
+        <div class="d"><b>오류가 아니라 정상 응답(201)</b>으로 처리. 억지 제안은 신뢰를 무너뜨리므로
+          <b>"바꾸지 마세요"도 하나의 제안</b>으로 취급한다.</div>
+        <span class="k ok">201 · status = NO_CHANGE_NEEDED · annualGain = 0</span></div></div>
+      <div class="ex"><div class="sc" style="background:var(--amber)"><b>7</b><span>화면</span></div><div class="bd">
+        <div class="t">파라미터 범위 초과 → 검증 오류</div>
+        <div class="d">인정률 0~1 초과, 실적 구간 경계 역전 등. <b>실패한 필드 경로를 함께 반환</b>해
+          해당 입력란에 직접 표시한다.</div>
+        <span class="k">400 INVALID_PARAMETER + field</span></div></div>
+    </div>
+  </div>
+
+  <div>
+    <h3>애플리케이션 오류 코드 <i>응답 본문의 code 필드 · 클라이언트 분기용</i></h3>
+    <div class="box"><table style="font-size:14.5px">
+      <tr><th style="width:66px">HTTP</th><th style="width:270px">code</th><th>대표 메시지</th></tr>
+      <tr><td class="code" style="font-size:15.5px;color:var(--amber)">400</td><td class="code">INVALID_PARAMETER</td><td>채널 인정률은 0 이상 1 이하여야 합니다</td></tr>
+      <tr><td class="code" style="font-size:15.5px">401</td><td class="code">UNAUTHORIZED</td><td>이메일 또는 비밀번호가 올바르지 않습니다</td></tr>
+      <tr><td class="code" style="font-size:15.5px">403</td><td class="code">FORBIDDEN</td><td>카드사 담당자만 접근할 수 있습니다</td></tr>
+      <tr><td class="code" style="font-size:15.5px">404</td><td class="code">NOT_FOUND</td><td>해당 카드를 찾을 수 없습니다</td></tr>
+      <tr><td class="code" style="font-size:15.5px">409</td><td class="code">DUPLICATE_EMAIL · CARD_CODE ·<br>BENEFIT_RULE · ALREADY_LINKED_CARD</td><td>이미 가입된 이메일입니다 <span style="color:var(--ink3)">(중복 등록 계열)</span></td></tr>
+      <tr><td class="code" style="font-size:15.5px">409</td><td class="code">NOT_ACCEPTABLE_RECOMMENDATION</td><td>변경 실익이 없는 제안은 수락할 수 없습니다</td></tr>
+      <tr style="background:var(--red-l)"><td class="code" style="font-size:15.5px;color:var(--red)">422</td>
+          <td class="code" style="color:var(--red)">INSUFFICIENT_TRANSACTION_DATA</td><td>가입 후 1개월이 지나야 진단할 수 있습니다</td></tr>
+    </table></div>
+  </div>
+
+  <div>
+    <h3>화면별 정의 코드 <i>호출되는 API 전 구간</i></h3>
+    <div class="box"><table style="font-size:14.5px">
+      <tr><th class="c" style="width:52px">화면</th><th>기능</th><th style="width:230px">정의된 코드</th></tr>
+      <tr><td class="c code" style="font-size:15.5px">1</td><td>로그인 / 회원가입</td><td class="code">400 · 401 · 409</td></tr>
+      <tr><td class="c code" style="font-size:15.5px">2</td><td>카드 데이터 연결</td><td class="code">400 · 401 · 403 · 404 · 409</td></tr>
+      <tr style="background:var(--red-l)"><td class="c code" style="font-size:15.5px">3</td><td>실적·연회비 진단</td><td class="code">401 · 403 · 404 · <b style="color:var(--red)">422</b></td></tr>
+      <tr><td class="c code" style="font-size:15.5px">4</td><td>페이·정기결제 현황</td><td class="code">400 · 401 · 404 · <b style="color:var(--red)">422</b></td></tr>
+      <tr style="background:var(--red-l)"><td class="c code" style="font-size:15.5px">5</td><td>개선 제안</td><td class="code">400 · 401 · 403 · 404 · 409 · <b style="color:var(--red)">422</b></td></tr>
+      <tr><td class="c code" style="font-size:15.5px">6</td><td>채널 포지션 대시보드</td><td class="code">400 · 401 · 403</td></tr>
+      <tr style="background:var(--red-l)"><td class="c code" style="font-size:15.5px">7</td><td>정책 시뮬레이션</td><td class="code"><b style="color:var(--red)">400</b> · 401 · 403 · 404</td></tr>
+      <tr><td class="c code" style="font-size:15.5px">8</td><td>카드·혜택 규칙 관리</td><td class="code">400 · 401 · 403 · 404 · 409</td></tr>
+    </table></div>
+  </div>
+</div>
+
+<div class="pr">
+  <div class="pi"><b>응답 구조 통일</b><span>모든 오류가 <em>code · message · field · detail · timestamp</em> 동일 형태.
+    <em>code</em>는 기계가 분기하고 <em>message</em>는 사람이 읽는다.</span></div>
+  <div class="pi"><b>공통 스키마 재사용</b><span>6종 오류를 <em>components/responses</em>에 정의하고 <em>$ref</em>로 참조 —
+    명세 전체 <em>$ref 220회</em>.</span></div>
+  <div class="pi"><b>화면에는 코드를 노출하지 않는다</b><span>사용자에게는 <em>message</em>만 보인다.
+    상태 코드·필드 경로는 개발·문서 레벨에만 남긴다.</span></div>
+</div>
+</div></body></html>
